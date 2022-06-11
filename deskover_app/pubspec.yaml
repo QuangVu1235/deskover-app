@@ -29,7 +29,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  get: ^4.6.1
+  badges: ^2.0.2
+  flutter_screenutil: ^5.3.1
+  #  device_preview: ^1.1.0
+  # RestAPI
+  json_annotation: ^4.4.0 # for Json Annotation
+  retrofit: ^3.0.1+1 # for restAPI Annotation
+  logger: any # for beauty Logger ;)))
+  dio: ^4.0.4 # for restAPI Connect
+  pretty_dio_logger: ^1.1.1 # for Rest API Logger
+  # Dependency injection (DI)
+  injectable: ^1.5.3 # for DI Annotation
+  get_it: ^7.2.0 # for DI Container
+  # SMS and OTP
+  pin_code_fields: ^7.3.0
+  # utils
+  flutter_svg: ^1.0.3
+  flutter_image_slideshow: any
+  loading_indicator: ^3.0.3
+  datetime_picker_formfield: ^2.0.0
+  intl: ^0.17.0
+  shared_preferences: ^2.0.13
+  fluttertoast: ^8.0.9
+  image_picker: ^0.8.4+11
+  group_radio_button: ^1.2.0
+  mask_text_input_formatter: ^2.1.0
+  carousel_slider: ^4.0.0
+  flutter_rating_bar: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
