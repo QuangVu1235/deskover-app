@@ -44,6 +44,7 @@ class ViewModel {
         'onemessage': jsonDecode(error.response.toString())?['message'],
         'validMessage': error.response?.data?['errors'].toString(),
       };
+
       if (showErrorDialog) {
         String messageDialog = errorMap['onemessage'] ?? errorMap['message'] ??
             errorMap['validMessage'] ??
