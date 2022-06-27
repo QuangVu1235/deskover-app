@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:deskover_app/api/signin_reponse.dart';
 import 'package:deskover_app/component/widget/global_input_form_widget.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import '../../client/ApiClient.dart';
 
 
 class SigninSignupScreen extends StatefulWidget {
@@ -13,23 +19,33 @@ class SigninSignupScreen extends StatefulWidget {
 
   String? initPhone;
 
+
   @override
   State<StatefulWidget> createState() => _SigninSignupScreen();
 }
 
+
 class _SigninSignupScreen extends State<SigninSignupScreen>{
+
+  late final ApiClient _apiClient;
+
+  get username => null;
+  get password => null;
+
+  Future<void> loginUsers() async {
+    dynamic res = await _apiClient.login(
+      username.text,
+      password.text,
+    );
+    if(res == null){
+      print('null');
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text("Deskover APP"),
-          // SvgPicture.asset(
-          //   SvgImageAssets.imgLogo,
-          //   fit: BoxFit.contain,
-          //   height: 40,
-          // ),
           centerTitle: true,
           leadingWidth: 0,
           leading: const SizedBox.shrink(),
@@ -72,7 +88,7 @@ class _SigninSignupScreen extends State<SigninSignupScreen>{
                           ),
                           const SizedBox(height: SpaceValues.space16),
                           GlobalInputFormWidget(
-                            // controller: viewModel.inputPhone,
+                            controller: username,
                             validator: Validator.phone,
                             textInputType: TextInputType.phone,
                             title: 'Số điện thoại',
@@ -80,7 +96,7 @@ class _SigninSignupScreen extends State<SigninSignupScreen>{
                           ),
                           const SizedBox(height: SpaceValues.space40),
                           GlobalInputFormWidget(
-                            // controller: viewModel.inputPassword,
+                            controller: password,
                             validator: Validator.password,
                             textInputType: TextInputType.visiblePassword,
                             title: 'Mật khẩu',
@@ -95,16 +111,16 @@ class _SigninSignupScreen extends State<SigninSignupScreen>{
                                   primary: UIColors.black70
                               ),
                               // onPressed: viewModel.onLogin,
-                              onPressed: _updateText,
+                              onPressed: loginUsers,
                               child: const Text('Tiếp tục'),
                             ),
                           ),
                           const SizedBox(
                             height: SpaceValues.space8,
                           ),
-                          InkWell(
+                          const InkWell(
                             // onTap: viewModel.onForgetPassword,
-                            child: const Text(
+                            child: Text(
                               "Quên mật khẩu?",
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
@@ -121,7 +137,6 @@ class _SigninSignupScreen extends State<SigninSignupScreen>{
             ],
           ),
         )
-      ),
     );
   }
   void _updateText() {
