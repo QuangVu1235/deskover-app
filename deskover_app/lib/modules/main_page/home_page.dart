@@ -50,14 +50,14 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.network(userData.avatar),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Text(
                             '${userInfo.data.firstName} ${userInfo.data.lastName}',
-                            style: TextStyle(fontSize: 16.0),
+                            style: const TextStyle(fontSize: 16.0),
                           ),
                           Text(
                             userData.email,
-                            style: TextStyle(fontSize: 16.0),
+                            style: const TextStyle(fontSize: 16.0),
                           ),
                         ],
                       );
