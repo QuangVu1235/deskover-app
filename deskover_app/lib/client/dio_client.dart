@@ -1,14 +1,22 @@
 import 'package:deskover_app/api/sign/login_resquest.dart';
+import 'package:deskover_app/api/sign/response/user_response.dart';
 import 'package:deskover_app/api/user.dart';
 import 'package:deskover_app/api/user_info.dart';
-import 'package:deskover_app/api/sign/response/user_response.dart';
+import 'package:deskover_app/utils/AppUtils.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {
   // TODO: Set up and define the methods for network operations
   final Dio _dio = Dio();
   final _baseUrl = 'https://reqres.in/api';
   final _baseLocalhost = 'http://10.0.2.2:8080';
+
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? action = prefs.getString('uToken');
+    print(action);
+  }
 
   Future<User?> getUser({required String id}) async {
     User? user;
@@ -55,16 +63,17 @@ class DioClient {
     UserResponse? userResponse;
     try {
       Response response = await _dio.post(
-        _baseLocalhost+'/authenticate',
+        _baseLocalhost+'/v1/api/admin/auth/login',
         data: userLogin.toJson(),
       );
 
       print('\n\n\nToken: ${response.data}');
       userResponse = UserResponse.fromJson(response.data);
-    } catch (e) {
-      print('Error: $e');
+    }on DioError catch (e) {
+      print(e);
+      // throw 'Đăng nhập thất bại';
+      return null;
     }
-
     return userResponse;
   }
 }

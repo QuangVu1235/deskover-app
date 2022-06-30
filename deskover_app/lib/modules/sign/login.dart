@@ -6,8 +6,10 @@ import 'package:deskover_app/api/widget/create.dart';
 import 'package:deskover_app/component/widget/global_input_form_widget.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
+import 'package:deskover_app/utils/AppUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../themes/space_values.dart';
 
@@ -21,7 +23,7 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   late final TextEditingController _username;
   late final TextEditingController _password;
-
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final DioClient _dioClient = DioClient();
   bool isCreating = false;
 
@@ -39,39 +41,33 @@ class _Login extends State<Login> {
     return Scaffold(
       body: GestureDetector(
         child: Container(
-          color: UIColors.black10 ,
-          child: Stack(
+          color: Colors.white,
+          child:
+          Stack(
             children:  <Widget>[
-              Container(
-                height: heightOfScreen * 0.45,
+              SizedBox(
+                height: heightOfScreen*0.7,
                 width: widthOfScreen,
-                decoration: const BoxDecoration(
-                    color: Colors.white,// Set border width
-                    borderRadius: BorderRadius.only( bottomLeft: Radius.circular(40),bottomRight: Radius.circular(40)
-                        ), // Set rounded corner radius
-                    boxShadow: [BoxShadow(blurRadius: 10,color: UIColors.black10,offset: Offset(1,2))] // Make rounded corner of border
-                ),
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                      ),
-                      Image.asset('resources/images/onlinedelivery_20210504191855.jpg')
-
-                    ],
-                  ),
-                ),
+                child: Center(child: Image.asset('resources/images/onlinedelivery_20210504191855.jpg')),
               ),
               ListView(
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
                   SizedBox(
-                    height: heightOfScreen * 0.45,
+                    height: heightOfScreen * 0.6,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(42),
-                    child: _form(),
+                  Container(
+                    height: heightOfScreen * 0.5,
+                    decoration: const BoxDecoration(
+                        color: UIColors.white,// Set border width
+                        borderRadius: BorderRadius.only( topLeft: Radius.circular(40),topRight: Radius.circular(40)
+                        ), // Set rounded corner radius
+                        boxShadow: [BoxShadow(blurRadius: 10,color: UIColors.black10,offset: Offset(1,2))] // Make rounded corner of border
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(42),
+                      child: _form(),
+                    ),
                   ),
 
                 ],
@@ -85,12 +81,13 @@ class _Login extends State<Login> {
   }
   Widget _form(){
     return Form(
+      key: formKey,
       child: Column(
         children: [
           GlobalInputFormWidget(
             controller: _username,
-            validator: Validator.phone,
-            textInputType: TextInputType.phone,
+            validator: Validator.username,
+            textInputType: TextInputType.text,
             title: 'Vui lòng nhập tên đăng nhập',
             hint: 'Vui lòng nhập số điện thoại',
           ),
@@ -107,7 +104,7 @@ class _Login extends State<Login> {
           ),
           const SizedBox(height: 16.0),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 87),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -115,7 +112,7 @@ class _Login extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(54),
                   ),
-                  primary: UIColors.black70, // background
+                  primary: UIColors.loginbuuton, // background
                   onPrimary: Colors.white,
                   // foreground
                 ),
@@ -135,49 +132,40 @@ class _Login extends State<Login> {
       ),
     );
   }
-  void _onLogin() async {
-    setState(() {
-      isCreating = true;
-    });
-    if (_username.text != '' && _password.text != '') {
-      UserLogin userLogin = UserLogin(
-        username: _username.text,
-        password: _password.text,
-      );
-
-      UserResponse? retrievedUser = await _dioClient.login(userLogin: userLogin);
-      if (retrievedUser!=null) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomePage()));
-        showDialog(
-          context: context,
-          builder: (context) => Dialog(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Text('Đăng nhập thành công'),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      }else{
-        return;
-      }
+  void _onLogin() async{
+    final prefs = await SharedPreferences.getInstance();
+    if (!(formKey.currentState?.validate() ?? false)) {
+      // not validate or null
+      return;
     }
-    // setState(() {
-    //   isCreating = false;
-    // });
+    UserLogin userLogin = UserLogin(
+      username: _username.text,
+      password: _password.text,
+    );
+    UserResponse? retrievedUser = await _dioClient.login(userLogin: userLogin);
+    await prefs.setString('uToken', retrievedUser?.token ?? '');
+    final String? action = prefs.getString('uToken');
+    print(action);
+    if (retrievedUser!=null) {
+      setState(() {
+        Get.to(() =>  HomePage());
+      });
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => HomePage()));
+
+      return AppUtils().showPopup(
+        title: 'Thông báo',
+        subtitle: 'Đăng nhập thất thành công',
+        isSuccess: true,
+      );
+    }else{
+      return AppUtils().showPopup(
+        title: 'Đăng nhập thất bại',
+        subtitle: 'Tài khoản hoặc mật khẩu không chính xác',
+        isSuccess: false,
+      );
+    }
   }
 }

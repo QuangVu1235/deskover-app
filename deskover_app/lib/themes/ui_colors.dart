@@ -38,6 +38,7 @@ class UIColors {
   static const Color title10 = Color(0x4D04113E);
   static const Color error80 = Color(0xCCE41338);
   static const Color focusedInputBorder = Color(0xFF3470FB);
+  static const Color loginbuuton = Color(0xFF1C519D);
   static const Color focusedInputBorder30 = Color(0x4D3470FB);
   static const Color backgroundImage = Color(0xFFC4C4C4);
   static const Color navSelected = Color(0xFFB41D8D);

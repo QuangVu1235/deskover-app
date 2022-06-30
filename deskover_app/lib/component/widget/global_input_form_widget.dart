@@ -104,7 +104,11 @@ class _GlobalInputFormWidgetState extends State<GlobalInputFormWidget> {
               RichText(
                 text: TextSpan(
                   text: widget.title ?? '',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: const TextStyle(
+                    color: UIColors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14
+                  ),
                   children: [
                     TextSpan(
                       text: ' ${widget.requireInput}',
@@ -274,8 +278,14 @@ class Validator {
 
   static String? password(valueDy) {
     String value = valueDy ?? '';
-    if (value.length < 8) {
+    if (value.length < 6) {
       return 'Vui lòng nhập mật khẩu ít nhất 8 ký tự';
+    }
+  }
+  static String? username(valueDy) {
+    String value = valueDy ?? '';
+    if (value.length < 6) {
+      return 'Vui lòng nhập tài khoản ít nhất 6 kí tự';
     }
   }
 
