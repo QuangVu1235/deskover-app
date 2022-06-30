@@ -57,13 +57,13 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-            "resources/images/img_loading.png",
-            height: 60,
-            color: Colors.blueAccent,
+            "resources/icons/logo.png",
+            height: 110,
+            // color: Colors.blueAccent,
           ),
             // SvgPicture.asset("resources/images/img_loading.png", height: 79),
             Container(
-              margin: const EdgeInsets.only(top: 40),
+              margin: const EdgeInsets.only(top: 20),
               child: AnimatedBuilder(
                 animation: animationController,
                 child: Image.asset(
