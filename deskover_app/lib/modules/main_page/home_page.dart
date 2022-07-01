@@ -1,13 +1,8 @@
-import 'package:deskover_app/api/data.dart';
-import 'package:deskover_app/api/user.dart';
 import 'package:deskover_app/client/dio_client.dart';
-import 'package:deskover_app/api/widget/create.dart';
 import 'package:deskover_app/modules/order/order_list.dart';
-import 'package:deskover_app/modules/sign/login.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,35 +43,6 @@ class _HomePageState extends State<HomePage> {
       });
     }
     return Scaffold(
-      appBar: AppBar(
-        // automaticallyImplyLeading: false,
-        title: const Text('User Info'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Tuỳ chọn'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex,),
       ),

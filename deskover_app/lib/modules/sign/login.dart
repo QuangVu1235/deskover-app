@@ -47,7 +47,7 @@ class _Login extends State<Login> {
             Container(
               width: double.infinity,
               height: heightOfScreen,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(IconAssets.brackgroundLogin),
                   fit: BoxFit.fill,
@@ -63,7 +63,7 @@ class _Login extends State<Login> {
                     child: Center(child: Image.asset('resources/icons/delivery.png',height: 400)),
                   ),
                   Image.asset('resources/icons/logo.png',width: 330,),
-                  SvgPicture.asset('resources/icons/word.svg',color: UIcolors.white,)
+                  SvgPicture.asset('resources/icons/word.svg',color: UIColors.white,)
                 ],
               ),
             ),

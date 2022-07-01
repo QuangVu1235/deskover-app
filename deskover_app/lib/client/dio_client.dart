@@ -71,8 +71,9 @@ class DioClient {
       userResponse = UserResponse.fromJson(response.data);
     }on DioError catch (e) {
       print(e);
-      // throw 'Đăng nhập thất bại';
-      return null;
+      print('STATUS: ${e.response?.statusCode}');
+      print('DATA: ${e.response?.data}');
+      print('HEADERS: ${e.response?.headers}');
     }
     return userResponse;
   }

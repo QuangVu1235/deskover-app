@@ -19,6 +19,35 @@ class _OrderListScreen extends State<OrderListScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(
+          // automaticallyImplyLeading: false,
+          title: const Text('User Info'),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Tuỳ chọn'),
+              ),
+              ListTile(
+                title: const Text('Item 1'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Item 2'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         body: ListView.builder(
             padding: const EdgeInsets.all(8),
             itemCount: entries.length,

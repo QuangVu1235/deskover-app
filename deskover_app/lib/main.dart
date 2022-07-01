@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 void main()  {
-  runApp( MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       // locale: DevicePreview.locale(context),
       // builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      title: 'Mutosi App',
+      title: 'Deskover-depp',
       theme: Themes.mainTheme,
       home: SplashScreen(action: loading, nextScreen: Login()),
     );
