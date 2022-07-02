@@ -1,8 +1,10 @@
-import 'package:deskover_app/client/dio_client.dart';
+import 'package:deskover_app/client/api_login.dart';
 import 'package:deskover_app/modules/order/order_list.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../order/home_order.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
   static  final List<Widget> _widgetOptions = <Widget>[
-    const  OrderListScreen(),
+    HomeOrderScreen(),
     Text(
       'Index 1: Business',
       style: optionStyle,
@@ -47,31 +49,37 @@ class _HomePageState extends State<HomePage> {
         child: _widgetOptions.elementAt(_selectedIndex,),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: UIColors.black,
+        elevation: 5,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: UIColors.loginbuuton,
+        unselectedItemColor: Colors.black54,
+        selectedLabelStyle: const TextStyle(
+          fontSize: 9.0,
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedFontSize: 8,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Đơn hàng',
-            backgroundColor: UIColors.loginbuuton,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_card_rounded),
             label: 'Tiếp nhận',
-            backgroundColor: UIColors.loginbuuton,
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.delivery_dining),
             label: 'Đang giao',
-            backgroundColor: UIColors.loginbuuton,
+
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
-            backgroundColor: UIColors.loginbuuton,
+
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: UIColors.white,
         onTap: _onItemTapped,
       ),
 

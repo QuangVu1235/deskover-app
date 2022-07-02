@@ -1,8 +1,7 @@
-import 'package:deskover_app/client/dio_client.dart';
+import 'package:deskover_app/client/api_login.dart';
 import 'package:deskover_app/api/sign/login_resquest.dart';
 import 'package:deskover_app/api/user_info.dart';
 import 'package:deskover_app/api/sign/response/user_response.dart';
-import 'package:deskover_app/api/widget/create.dart';
 import 'package:deskover_app/component/widget/global_input_form_widget.dart';
 import 'package:deskover_app/constants/icon_assets.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
@@ -12,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../themes/space_values.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -33,7 +30,20 @@ class _Login extends State<Login> {
   void initState() {
     _username = TextEditingController();
     _password = TextEditingController();
+    load();
     super.initState();
+  }
+  void load() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? action = prefs.getString('uToken');
+    if(action != null){
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false,
+      );
+    }
+    print('Check Token Login'+ action!);
   }
 
   @override
@@ -152,6 +162,7 @@ class _Login extends State<Login> {
     );
   }
   void _onLogin() async{
+    FocusManager.instance.primaryFocus?.unfocus();
     final prefs = await SharedPreferences.getInstance();
     if (!(formKey.currentState?.validate() ?? false)) {
       // not validate or null
@@ -163,27 +174,15 @@ class _Login extends State<Login> {
     );
     UserResponse? retrievedUser = await _dioClient.login(userLogin: userLogin);
     await prefs.setString('uToken', retrievedUser?.token ?? '');
-    final String? action = prefs.getString('uToken');
-    print(action);
+
     if (retrievedUser!=null) {
       setState(() {
         Get.to(() =>  HomePage());
       });
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => HomePage()));
-
       return AppUtils().showPopup(
         title: 'Thông báo',
         subtitle: 'Đăng nhập thất thành công',
         isSuccess: true,
-      );
-    }else{
-      return AppUtils().showPopup(
-        title: 'Đăng nhập thất bại',
-        subtitle: 'Tài khoản hoặc mật khẩu không chính xác',
-        isSuccess: false,
       );
     }
   }
