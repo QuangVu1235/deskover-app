@@ -12,6 +12,7 @@ class UIColors {
   static const Color black = Color(0xFF000000);
   static const Color black80 = Color(0xCC000000);
   static const Color black70 = Color(0xB3000000);
+  static const Color black50 = Color(0x80000000);
   static const Color black40 = Color(0x66000000);
   static const Color black30 = Color(0x4D000000);
   static const Color black10 = Color(0x1A000000);
@@ -29,6 +30,9 @@ class UIColors {
   static const Color gray5 = Color(0x0de0e0e0);
   static const Color login = Color(0xB4B4B4);
 
+  static const Color yellow40 = Color(0x73FFD740);
+  static const Color yellow = Color(0xFFFC7E00);
+  static const Color green = Color(0xF202A95C);
   // color in screen
   static const Color backgroundAppBar = Color(0xFFB6118E);
   static const Color title = Color(0xFF04113E);
@@ -38,6 +42,7 @@ class UIColors {
   static const Color title10 = Color(0x4D04113E);
   static const Color error80 = Color(0xCCE41338);
   static const Color focusedInputBorder = Color(0xFF3470FB);
+  static const Color loginbuuton = Color(0xFF1C519D);
   static const Color focusedInputBorder30 = Color(0x4D3470FB);
   static const Color backgroundImage = Color(0xFFC4C4C4);
   static const Color navSelected = Color(0xFFB41D8D);
