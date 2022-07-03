@@ -4,6 +4,8 @@ part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
+
+  @JsonKey(name: 'token')
   String token;
 
   UserResponse({

@@ -1,48 +1,24 @@
-import 'package:deskover_app/client/api_login.dart';
 import 'package:deskover_app/component/widget/global_input_form_widget.dart';
+import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/constants/icon_assets.dart';
-import 'package:deskover_app/entity/sign/login_resquest.dart';
-import 'package:deskover_app/entity/sign/response/user_response.dart';
-import 'package:deskover_app/modules/main_page/home_page.dart';
+import 'package:deskover_app/modules/sign/login_model.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
-import 'package:deskover_app/utils/AppUtils.dart';
+import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _Login createState() => _Login();
+  _LoginScreen createState() => _LoginScreen();
 }
 
-class _Login extends State<Login> {
-  late final TextEditingController _username;
-  late final TextEditingController _password;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final DioClient _dioClient = DioClient();
-  bool isCreating = false;
+class _LoginScreen extends ViewWidget<LoginScreen,LoginModel> {
 
   @override
   void initState() {
-    _username = TextEditingController();
-    _password = TextEditingController();
-    load();
     super.initState();
-  }
-  void load() async{
-    final prefs = await SharedPreferences.getInstance();
-    final String? action = prefs.getString('uToken');
-    if(action != null){
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-            (Route<dynamic> route) => false,
-      );
-    }
-    print('Check Token Login'+ action!);
   }
 
   @override
@@ -108,11 +84,11 @@ class _Login extends State<Login> {
   Widget _form(){
     return SingleChildScrollView(
       child: Form(
-        key: formKey,
+        key: viewModel.formKey,
         child: Column(
           children: [
             GlobalInputFormWidget(
-              controller: _username,
+              controller: viewModel.inputUsername,
               validator: Validator.username,
               textInputType: TextInputType.text,
               title: 'Vui lòng nhập tên đăng nhập',
@@ -122,7 +98,7 @@ class _Login extends State<Login> {
               height: 20,
             ),
             GlobalInputFormWidget(
-              controller: _password,
+              controller: viewModel.inputPassword,
               validator: Validator.password,
               textInputType: TextInputType.visiblePassword,
               title: 'Mật khẩu',
@@ -143,7 +119,7 @@ class _Login extends State<Login> {
                     onPrimary: Colors.white,
                     // foreground
                   ),
-                  onPressed: onLogin,
+                  onPressed: viewModel.onLogin,
                   child: const Padding(
                     padding: EdgeInsets.all(5),
                     child: Text('Đăng nhập',style: TextStyle(
@@ -160,29 +136,7 @@ class _Login extends State<Login> {
       ),
     );
   }
-  void onLogin() async{
-    FocusManager.instance.primaryFocus?.unfocus();
-    final prefs = await SharedPreferences.getInstance();
-    if (!(formKey.currentState?.validate() ?? false)) {
-      // not validate or null
-      return;
-    }
-    UserLogin userLogin = UserLogin(
-      username: _username.text,
-      password: _password.text,
-    );
-    UserResponse? retrievedUser = await _dioClient.login(userLogin: userLogin);
-    await prefs.setString('uToken', retrievedUser?.token ?? '');
 
-    if (retrievedUser!=null) {
-      setState(() {
-        Get.to(() =>  HomePage());
-      });
-      return AppUtils().showPopup(
-        title: 'Thông báo',
-        subtitle: 'Đăng nhập thất thành công',
-        isSuccess: true,
-      );
-    }
-  }
+  @override
+  LoginModel createViewModel() => getIt<LoginModel>();
 }
