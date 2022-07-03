@@ -1,9 +1,8 @@
 import 'package:deskover_app/client/api_login.dart';
-import 'package:deskover_app/api/sign/login_resquest.dart';
-import 'package:deskover_app/api/user_info.dart';
-import 'package:deskover_app/api/sign/response/user_response.dart';
 import 'package:deskover_app/component/widget/global_input_form_widget.dart';
 import 'package:deskover_app/constants/icon_assets.dart';
+import 'package:deskover_app/entity/sign/login_resquest.dart';
+import 'package:deskover_app/entity/sign/response/user_response.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/AppUtils.dart';
@@ -144,7 +143,7 @@ class _Login extends State<Login> {
                     onPrimary: Colors.white,
                     // foreground
                   ),
-                  onPressed: _onLogin,
+                  onPressed: onLogin,
                   child: const Padding(
                     padding: EdgeInsets.all(5),
                     child: Text('Đăng nhập',style: TextStyle(
@@ -161,7 +160,7 @@ class _Login extends State<Login> {
       ),
     );
   }
-  void _onLogin() async{
+  void onLogin() async{
     FocusManager.instance.primaryFocus?.unfocus();
     final prefs = await SharedPreferences.getInstance();
     if (!(formKey.currentState?.validate() ?? false)) {

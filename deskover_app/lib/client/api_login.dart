@@ -1,8 +1,7 @@
-import 'package:deskover_app/api/sign/login_resquest.dart';
-import 'package:deskover_app/api/sign/response/user_response.dart';
 import 'package:deskover_app/api/user.dart';
-import 'package:deskover_app/api/user_info.dart';
 import 'package:deskover_app/config/base_api.dart';
+import 'package:deskover_app/entity/sign/login_resquest.dart';
+import 'package:deskover_app/entity/sign/response/user_response.dart';
 import 'package:deskover_app/utils/AppUtils.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
