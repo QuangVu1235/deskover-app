@@ -9,8 +9,12 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i4;
 
+import '../api/sign/service/sign_api.dart' as _i6;
+import '../api/sign/sign_datasource.dart' as _i7;
 import '../core/dio_cache/dio_cache_manager.dart' as _i3;
-import 'injection_config.dart' as _i6; // ignore_for_file: unnecessary_lambdas
+import '../modules/sign/login_model.dart' as _i9;
+import '../usercases/sign_usecase.dart' as _i8;
+import 'injection_config.dart' as _i10; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -24,7 +28,14 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       preResolve: true);
   gh.lazySingleton<_i5.Dio>(() => moduleRegister.getDio(
       get<_i4.SharedPreferences>(), get<_i3.DioCacheManager>()));
+  gh.lazySingleton<_i6.SigninAPI>(() => _i6.SigninAPI(get<_i5.Dio>()));
+  gh.lazySingleton<_i7.SignDatasource>(
+      () => _i7.SignDatasourceImpl(get<_i6.SigninAPI>()));
+  gh.lazySingleton<_i8.SigninUsecase>(
+      () => _i8.SigninUsecase(get<_i7.SignDatasource>()));
+  gh.factory<_i9.LoginModel>(() =>
+      _i9.LoginModel(get<_i8.SigninUsecase>(), get<_i4.SharedPreferences>()));
   return get;
 }
 
-class _$ModuleRegister extends _i6.ModuleRegister {}
+class _$ModuleRegister extends _i10.ModuleRegister {}

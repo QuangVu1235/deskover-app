@@ -1,10 +1,15 @@
-import 'package:deskover_app/modules/sign/login.dart';
+import 'dart:async';
+import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/modules/splashcreen/splashscreen.dart';
 import 'package:deskover_app/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'modules/sign/login_screen.dart';
 
-void main()  {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp( const MyApp());
 }
 
@@ -24,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Deskover-depp',
       theme: Themes.mainTheme,
-      home: SplashScreen(action: loading, nextScreen: Login()),
+      home: SplashScreen(action: loading, nextScreen: LoginScreen()),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:deskover_app/config/injection_config.config.dart';
 import 'package:deskover_app/core/dio_cache/dio_cache_manager.dart';
-import 'package:deskover_app/modules/sign/login.dart';
+import 'package:deskover_app/modules/sign/login_screen.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,10 +69,10 @@ abstract class ModuleRegister {
             isSuccess: false,
           );
           if (null != Get.context && Navigator.canPop(Get.context!)) {
-            Get.off(Login());
+            Get.off(const LoginScreen());
           }
           else {
-            Get.to(Login());
+            Get.to(const LoginScreen());
           }
         }
         handler.reject(dioError);

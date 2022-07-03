@@ -1,5 +1,3 @@
-import 'package:deskover_app/client/api_login.dart';
-import 'package:deskover_app/modules/order/order_list.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +10,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final DioClient _client = DioClient();
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   @override
   void initState() {
-    _client.init();
     super.initState();
   }
   static  final List<Widget> _widgetOptions = <Widget>[
