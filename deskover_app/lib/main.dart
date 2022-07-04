@@ -1,16 +1,29 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/modules/splashcreen/splashscreen.dart';
 import 'package:deskover_app/themes/themes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'modules/sign/login_screen.dart';
 
+StreamSubscription? iosSubscription;
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+
+  HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();// fix
   await configureDependencies();
-  runApp( const MyApp());
+  runApp( const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,12 +37,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       useInheritedMediaQuery: true,
-      // locale: DevicePreview.locale(context),
-      // builder: DevicePreview.appBuilder,
+      // locale: DevicePreview.locale(context), // Add the locale here
+      // builder: DevicePreview.appBuilder, // Add the builder here
       debugShowCheckedModeBanner: false,
       title: 'Deskover-depp',
       theme: Themes.mainTheme,
-      home: SplashScreen(action: loading, nextScreen: LoginScreen()),
+      home: SplashScreen(action: loading, nextScreen: const LoginScreen()),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../dashboard/dashboard_screen.dart';
 import '../order/home_order.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,10 +20,7 @@ class _HomePageState extends State<HomePage> {
   }
   static  final List<Widget> _widgetOptions = <Widget>[
     HomeOrderScreen(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    const DashboardScreen(),
     Text(
       'Index 2: School',
       style: optionStyle,

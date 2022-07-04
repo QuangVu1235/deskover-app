@@ -33,6 +33,8 @@ class UIColors {
   static const Color yellow40 = Color(0x73FFD740);
   static const Color yellow = Color(0xFFFC7E00);
   static const Color green = Color(0xF202A95C);
+  //appBarr
+  static const Color appBar = Color(0xF2126FF3);
   // color in screen
   static const Color backgroundAppBar = Color(0xFFB6118E);
   static const Color title = Color(0xFF04113E);
