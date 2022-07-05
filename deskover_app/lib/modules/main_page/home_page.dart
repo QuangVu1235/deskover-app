@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../dashboard/chart_bar.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../order/home_order.dart';
 import '../receive_orders/receive_orders.dart';
@@ -25,23 +26,17 @@ class _HomePageState extends State<HomePage> {
     const DashboardScreen(),
     ReceiveOrders(),
     HomeOrderScreen(),
-
-    const Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    BarChartSample1()
   ];
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex,),
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(bottom: 10,left: 10,right: 10),
+      bottomNavigationBar:
+      Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -61,7 +56,8 @@ class _HomePageState extends State<HomePage> {
             duration: Duration(milliseconds: 400),
             tabBackgroundColor: Colors.grey[100]!,
             color: Colors.black,
-            tabs: const [
+            // backgroundColor: UIColors.white,
+            tabs:  [
               GButton(
                 icon: LineIcons.home,
                 text: 'Home',

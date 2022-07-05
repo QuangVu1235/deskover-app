@@ -1,6 +1,5 @@
 
 import 'package:deskover_app/themes/space_values.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -112,19 +111,20 @@ class _ReceiveOrders extends State<ReceiveOrders>{
     );
   }
   void btnQRScaner() {
-    // Get.to(GlobalQRScannerScreen(
-    //   onDetect: (barcode, args) {
-    //     String rowcode = barcode.rawValue ?? '';
-    //     String? result;
-    //
-    //     if (result?.isEmpty ?? true) {
-    //       loading(() async => throw 'Vui lòng quét Barcode hoặc QRcode sản phẩm của Mutosi');
-    //     }
-    //     inputBarcode.text = result ?? '';
-    //     Get.back();
-    //
-    //   },
-    // ));
+    Get.to(GlobalQRScannerScreen(
+      onDetect: (barcode, args) {
+        String rowcode = barcode.rawValue ?? '';
+        print(rowcode);
+        // String? result;
+
+        // if (result?.isEmpty ?? true) {
+        //   loading(() async => throw 'Vui lòng quét Barcode hoặc QRcode sản phẩm của Mutosi');
+        // }
+        // inputBarcode.text = result ?? '';
+        Get.back();
+
+      },
+    ));
   }
 
 }

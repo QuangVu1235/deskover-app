@@ -1,9 +1,8 @@
-import 'package:deskover_app/constants/icon_assets.dart';
+
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 
 class OrderListScreen extends StatefulWidget {
   const OrderListScreen({Key? key}) : super(key: key);
@@ -18,13 +17,11 @@ class _OrderListScreen extends State<OrderListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return ListView.builder(
         itemCount: entries.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
-            margin: EdgeInsets.only(bottom: SpaceValues.space16),
+            margin: const EdgeInsets.only(bottom: SpaceValues.space16),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20)
             ),
@@ -55,7 +52,7 @@ class _OrderListScreen extends State<OrderListScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: SpaceValues.space12,),
+                    const SizedBox(height: SpaceValues.space12,),
                     Row(
                       children: [
                         Container(
@@ -70,7 +67,7 @@ class _OrderListScreen extends State<OrderListScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: SpaceValues.space16,),
+                        const SizedBox(width: SpaceValues.space16,),
                         Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +92,7 @@ class _OrderListScreen extends State<OrderListScreen> {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 12),
+                      margin: const EdgeInsets.only(left: 12),
                       child: Column(
                         children: const [
                           Icon(Icons.keyboard_double_arrow_down,size: 10,color: UIColors.black50,),
@@ -142,7 +139,7 @@ class _OrderListScreen extends State<OrderListScreen> {
                             ))
                       ],
                     ),
-                    SizedBox(height: SpaceValues.space24,),
+                    const SizedBox(height: SpaceValues.space24,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -177,7 +174,7 @@ class _OrderListScreen extends State<OrderListScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: SpaceValues.space24,),
+                    const SizedBox(height: SpaceValues.space24,),
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(left: SpaceValues.space32,right: SpaceValues.space32),

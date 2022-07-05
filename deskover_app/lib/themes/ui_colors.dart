@@ -35,6 +35,13 @@ class UIColors {
   static const Color green = Color(0xF202A95C);
   //appBarr
   static const Color appBar = Color(0xF2126FF3);
+  static const ButtonGradiend = [
+    Color(0xF2126FF3),
+    Color(0xF2004B98)
+  ];
+  static const Color button = Color(0xFF53E88B);
+
+
   // color in screen
   static const Color backgroundAppBar = Color(0xFFB6118E);
   static const Color title = Color(0xFF04113E);
