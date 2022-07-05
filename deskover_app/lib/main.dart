@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/modules/splashcreen/splashscreen.dart';
 import 'package:deskover_app/themes/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'modules/receive_orders/receive_orders.dart';
 import 'modules/sign/login_screen.dart';
 
 StreamSubscription? iosSubscription;
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Deskover-depp',
       theme: Themes.mainTheme,
-      home: SplashScreen(action: loading, nextScreen: const LoginScreen()),
+      home: SplashScreen(action: loading, nextScreen: HomePage()),
     );
   }
 }
