@@ -1,8 +1,13 @@
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
+import '../dashboard/chart_bar.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../order/home_order.dart';
+import '../receive_orders/receive_orders.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,66 +22,67 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
-  static  final List<Widget> _widgetOptions = <Widget>[
+  static   final List<Widget> _widgetOptions = <Widget>[
+    const DashboardScreen(),
+    ReceiveOrders(),
     HomeOrderScreen(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    BarChartSample1()
   ];
   @override
   Widget build(BuildContext context) {
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex,),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 5,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: UIColors.loginbuuton,
-        unselectedItemColor: Colors.black54,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 9.0,
-          fontWeight: FontWeight.w600,
+      bottomNavigationBar:
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.black.withOpacity(.1),
+            )
+          ],
         ),
-        unselectedFontSize: 8,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Đơn hàng',
+        child: SafeArea(
+          child: GNav(
+            rippleColor: Colors.grey[300]!,
+            hoverColor: Colors.grey[100]!,
+            gap: 8,
+            activeColor: Colors.black,
+            iconSize: 24,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            duration: Duration(milliseconds: 400),
+            tabBackgroundColor: Colors.grey[100]!,
+            color: Colors.black,
+            // backgroundColor: UIColors.white,
+            tabs:  [
+              GButton(
+                icon: LineIcons.home,
+                text: 'Home',
+              ),
+              GButton(
+                icon: LineIcons.search,
+                text: 'Search',
+              ),
+              GButton(
+                icon: LineIcons.heart,
+                text: 'Likes',
+              ),
+              GButton(
+                icon: LineIcons.user,
+                text: 'Profile',
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_card_rounded),
-            label: 'Tiếp nhận',
-
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.delivery_dining),
-            label: 'Đang giao',
-
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        ),
       ),
 
 

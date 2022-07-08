@@ -43,9 +43,7 @@ class LoginModel extends ViewModel{
     }, reCatchString: true).then((value) async {
       Get.to(() => HomePage());
     }).catchError((error) {
-      sharedPreferences.setStringList('login-failed', [
-
-      ]);
+        print(error);
     });
   }
 }

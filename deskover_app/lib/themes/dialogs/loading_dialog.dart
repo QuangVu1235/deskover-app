@@ -22,6 +22,8 @@ class LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   => AlertDialog(
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(5))),
     backgroundColor: backgroundColor,
     insetPadding: insetPadding ?? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
     title: SizedBox(
@@ -35,7 +37,7 @@ class LoadingDialog extends StatelessWidget {
             backgroundColor: UIColors.border10,
           ),
           if(message.isNotEmpty)
-            Text(message, style: const TextStyle(fontSize: 16, color: UIColors.brandA), textAlign: TextAlign.center,),
+            Text(message, style: const TextStyle(fontSize: 16, color: UIColors.loginbuuton), textAlign: TextAlign.center,),
         ],
       ),
     ),

@@ -26,33 +26,35 @@ class _LoginScreen extends ViewWidget<LoginScreen,LoginModel> {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       body: GestureDetector(
         child: Stack(
           children:  <Widget>[
             Container(
               width: double.infinity,
-              height: heightOfScreen,
+              height: heightOfScreen*0.7,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(IconAssets.brackgroundLogin),
                   fit: BoxFit.fill,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: heightOfScreen*0.05,),
-                  SizedBox(
-                    height: heightOfScreen*0.35,
-                    width: widthOfScreen,
-                    child: Center(child: Image.asset('resources/icons/delivery.png',height: 400)),
-                  ),
-                  Image.asset('resources/icons/logo.png',width: 330,),
-                  SvgPicture.asset('resources/icons/word.svg',color: UIColors.white,)
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: heightOfScreen*0.05,),
+                    SizedBox(
+                      height: heightOfScreen*0.35,
+                      width: widthOfScreen,
+                      child: Center(child: Image.asset('resources/icons/delivery.png',height: 400)),
+                    ),
+                    Image.asset('resources/icons/logo.png',width: 330,),
+                    SvgPicture.asset('resources/icons/word.svg',color: UIColors.white,)
+                  ],
+                ),
               ),
             ),
-
             ListView(
               padding: EdgeInsets.all(0),
               children: <Widget>[
@@ -60,7 +62,7 @@ class _LoginScreen extends ViewWidget<LoginScreen,LoginModel> {
                   height: heightOfScreen * 0.6,
                 ),
                 Container(
-                  height: heightOfScreen * 0.5,
+                  height: heightOfScreen * 0.4,
                   decoration: const BoxDecoration(
                       color: UIColors.white,// Set border width
                       borderRadius: BorderRadius.only( topLeft: Radius.circular(40),topRight: Radius.circular(40)

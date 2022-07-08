@@ -12,6 +12,8 @@ class AppUtils {
     await Get.dialog(AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: const EdgeInsets.symmetric(horizontal: SpaceValues.space16, vertical: 0),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5))),
       title: Row(
         children: [
           const Expanded(child: SizedBox.shrink()),
