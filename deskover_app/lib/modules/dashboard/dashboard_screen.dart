@@ -75,7 +75,7 @@ class _DashboardScreen extends State<DashboardScreen>{
                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                    Container(
                      margin: EdgeInsets.only(left: 16,right: 16),
-                     height: 120,
+                     height: 150,
                      decoration: BoxDecoration(
                          color: UIColors.white,
                          borderRadius: BorderRadius.circular(20),

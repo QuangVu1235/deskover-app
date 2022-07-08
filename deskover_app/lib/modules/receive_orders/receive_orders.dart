@@ -1,11 +1,14 @@
 
+import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/themes/space_values.dart';
+import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../global/global_qr_code.dart';
 import '../../themes/ui_colors.dart';
+import 'order_model.dart';
 
 class ReceiveOrders extends StatefulWidget{
   const ReceiveOrders({Key? key}) : super(key: key);
@@ -13,7 +16,13 @@ class ReceiveOrders extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _ReceiveOrders();
 }
-class _ReceiveOrders extends State<ReceiveOrders>{
+class _ReceiveOrders extends ViewWidget<ReceiveOrders,OrderModel>{
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,37 +41,44 @@ class _ReceiveOrders extends State<ReceiveOrders>{
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Expanded(
+                  //   child: TextFormField(
+                  //     controller: viewModel.inputOrderCode,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: InputDecoration(
+                  //       prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
+                  //       prefixIcon: Padding(
+                  //         padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
+                  //         child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
+                  //       ),
+                  //       hintText: 'Nhập mã vận đơn',
+                  //       // errorText: viewModel.validBarcode.value,
+                  //     ),
+                  //   ),
+                  //
+                  // ),
+
                   Expanded(
-                    child: TextFormField(
-                      // controller: viewModel.inputBarcode,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
-                          child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
-                        ),
-                        hintText: 'Nhập mã vận đơn  ',
-                        // errorText: viewModel.validBarcode.value,
-                      ),
-                    ),
-                    // child: Obx(() {
-                    //   return
-                    //     TextFormField(
-                    //     // controller: viewModel.inputBarcode,
-                    //     keyboardType: TextInputType.number,
-                    //     decoration: InputDecoration(
-                    //       prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
-                    //       prefixIcon: Padding(
-                    //         padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
-                    //         child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
-                    //       ),
-                    //       hintText: 'Nhập số serial',
-                    //       // errorText: viewModel.validBarcode.value,
-                    //     ),
-                    //   );
-                    // }),
-                  ),
+                     child: Obx(() {
+                      return
+                        Form(
+                            key: viewModel.formKey,
+                            child: TextFormField(
+                              controller: viewModel.inputOrderCode,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
+                                  child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
+                                ),
+                                hintText: 'Nhập số serial',
+                                errorText: viewModel.validBarcode.value,
+                              ),
+                            ));
+
+                  }),
+                   ),
                   const SizedBox(width: SpaceValues.space12,),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -73,7 +89,7 @@ class _ReceiveOrders extends State<ReceiveOrders>{
                         fixedSize: const Size(56, 42)
                     ),
                     onPressed: ()=>{
-                      btnQRScaner()
+                      viewModel.onSearch()
                     },
                     // viewModel.btnQRScaner,
                     child: Center(child: Icon(Icons.search,color: UIColors.white, size: 25)),
@@ -126,5 +142,8 @@ class _ReceiveOrders extends State<ReceiveOrders>{
       },
     ));
   }
+
+  @override
+  OrderModel createViewModel() => getIt<OrderModel>();
 
 }
