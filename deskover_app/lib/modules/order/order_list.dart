@@ -20,7 +20,8 @@ class _OrderListScreen extends State<OrderListScreen> {
     return ListView.builder(
         itemCount: entries.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
+          return
+            Card(
             margin: const EdgeInsets.only(bottom: SpaceValues.space16),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20)

@@ -1,6 +1,10 @@
+import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/modules/main_page/home_page_model.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
+import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -10,29 +14,31 @@ import '../order/home_order.dart';
 import '../receive_orders/receive_orders.dart';
 
 class HomePage extends StatefulWidget {
+  int? indexTap;
+
+  HomePage({Key? key, this.indexTap}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
+
   @override
   void initState() {
     super.initState();
+    viewModel.index.value = widget.indexTap ?? viewModel.index.value ;
   }
-  static   final List<Widget> _widgetOptions = <Widget>[
-    const DashboardScreen(),
-    ReceiveOrders(),
-    HomeOrderScreen(),
-    BarChartSample1()
+  static final List<Widget> _widgetOptions = <Widget>[
+          const DashboardScreen(),
+          const ReceiveOrders(),
+          HomeOrderScreen(),
+          const BarChartSample1()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex,),
+        child: Obx(() => _widgetOptions[viewModel.index.value]),
       ),
       bottomNavigationBar:
       Container(
@@ -57,7 +63,7 @@ class _HomePageState extends State<HomePage> {
             tabBackgroundColor: Colors.grey[100]!,
             color: Colors.black,
             // backgroundColor: UIColors.white,
-            tabs:  [
+            tabs:  const [
               GButton(
                 icon: LineIcons.home,
                 text: 'Home',
@@ -75,11 +81,9 @@ class _HomePageState extends State<HomePage> {
                 text: 'Profile',
               ),
             ],
-            selectedIndex: _selectedIndex,
+            selectedIndex: viewModel.index.value,
             onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
+              viewModel.index.value = index;
             },
           ),
         ),
@@ -88,5 +92,8 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+
+  @override
+  HomePageModel createViewModel() => getIt<HomePageModel>();
 
 }

@@ -114,7 +114,7 @@ class _DashboardScreen extends State<DashboardScreen>{
                                          fontWeight: FontWeight.w400
                                      ),
                                    ),
-                                   SizedBox(height: SpaceValues.space8,),
+                                   const SizedBox(height: SpaceValues.space8,),
                                    SizedBox(
                                      height: 30,
                                      child: ElevatedButton(
@@ -124,9 +124,10 @@ class _DashboardScreen extends State<DashboardScreen>{
                                          // foreground
                                        ),
                                        onPressed: () {
-                                         InkWell(
-                                           onTap: () => Get.to(()=> ReceiveOrders()),
-                                         );
+                                         Get.offAll(()=> HomePage(indexTap: 1,));
+                                         // InkWell(
+                                         //   onTap: () => Get.to(()=> const ReceiveOrders()),
+                                         // );
                                        },
                                        child: const Text(
                                          'Kiểm tra',

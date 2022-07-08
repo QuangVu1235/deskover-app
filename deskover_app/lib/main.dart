@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Deskover-depp',
       theme: Themes.mainTheme,
-      home: SplashScreen(action: loading, nextScreen: LoginScreen()),
+      home: SplashScreen(action: loading, nextScreen: const LoginScreen()),
     );
   }
 }
