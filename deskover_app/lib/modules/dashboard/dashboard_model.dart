@@ -28,9 +28,7 @@ class DashBoardModel extends ViewModel{
 
     totalPricePerMonth.value = '';
    _boardUserCase.getPricePerMonth('minhnh').then((value) async{
-     totalPricePerMonth.value = value;
-     print('valueaeeeeeeeeeee');
-     print(value);
+        totalPricePerMonth.value = value;
    });
   }
 
