@@ -50,7 +50,6 @@ class _LoginScreen extends ViewWidget<LoginScreen,LoginModel> {
                       child: Center(child: Image.asset('resources/icons/delivery.png',height: 400)),
                     ),
                     Image.asset('resources/icons/logo.png',width: 330,),
-                    SvgPicture.asset('resources/icons/word.svg',color: UIColors.white,)
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:deskover_app/config/base_api.dart';
+import 'package:deskover_app/modules/dashboard/reponse/message.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
@@ -11,6 +12,6 @@ abstract class DashboardAPI {
   factory DashboardAPI(Dio dio) = _DashboardAPI;
 
   @GET('/v1/api/admin/order-total-per-month')
-  Future<String> getTotalPerMonth(@Query('userModified') String? userModified);
-  
+  Future<Message> getTotalPerMonth(@Query('userModified') String? userModified);
+
 }

@@ -13,7 +13,6 @@ import '../../entity/order/order_response.dart';
 class OrderModel extends ViewModel{
 
     final OrderUsercase _orderUsercase;
-
     TextEditingController inputOrderCode = TextEditingController();
     final Rx<String?> validBarcode = Rx<String?>(null);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();

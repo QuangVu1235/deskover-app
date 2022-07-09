@@ -1,15 +1,13 @@
 import 'package:deskover_app/config/injection_config.dart';
-import 'package:deskover_app/modules/dashboard/dashboard_model.dart';
-import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import 'chart_bar.dart';
+import 'dashboard_model.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -18,11 +16,8 @@ class DashboardScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _DashboardScreen();
 }
 
-class _DashboardScreen extends ViewWidget<DashboardScreen, DashBoardModel> {
-  @override
-  void initState() {
-    // TODO: implement initState
-  }
+class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +125,7 @@ class _DashboardScreen extends ViewWidget<DashboardScreen, DashBoardModel> {
                                       ),
                                       onPressed: () {
                                         // Get.offAll(()=> HomePage(indexTap: 1,));
-                                        viewModel.getPerMonth();
+                                        viewModel.getPriceByMonth();
                                         // InkWell(
                                         //   onTap: () => Get.to(()=> const ReceiveOrders()),
                                         // );
@@ -280,4 +275,5 @@ class _DashboardScreen extends ViewWidget<DashboardScreen, DashBoardModel> {
 
   @override
   DashBoardModel createViewModel() => getIt<DashBoardModel>();
+
 }

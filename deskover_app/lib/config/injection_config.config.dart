@@ -32,7 +32,7 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
   final moduleRegister = _$ModuleRegister();
   gh.lazySingleton<_i3.DioCacheManager>(() => moduleRegister.getDioCache());
-  gh.factory<_i4.HomePageModel>(() => _i4.HomePageModel());
+  gh.lazySingleton<_i4.HomePageModel>(() => _i4.HomePageModel());
   await gh.factoryAsync<_i5.SharedPreferences>(
       () => moduleRegister.sharedPreferences(),
       preResolve: true);
