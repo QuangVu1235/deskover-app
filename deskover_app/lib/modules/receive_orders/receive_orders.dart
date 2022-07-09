@@ -1,4 +1,3 @@
-
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
@@ -7,107 +6,111 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../global/global_qr_code.dart';
+import '../../themes/dialogs/loading_dialog.dart';
 import '../../themes/ui_colors.dart';
 import 'order_model.dart';
 
-class ReceiveOrders extends StatefulWidget{
+class ReceiveOrders extends StatefulWidget {
   const ReceiveOrders({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ReceiveOrders();
 }
-class _ReceiveOrders extends ViewWidget<ReceiveOrders,OrderModel>{
 
+class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
   @override
   void initState() {
     super.initState();
+    print('12321321321');
+    print(viewModel.orderReponese.value?.orderCode);
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('123+'),
+        automaticallyImplyLeading: false,
+        title: Text('Tìm kiếm đơn hàng'),
         backgroundColor: UIColors.white,
       ),
       body: Column(
         children: [
           Container(
             margin: EdgeInsets.only(top: 2),
-            padding: EdgeInsets.only(top: 8,bottom: 8),
+            padding: EdgeInsets.only(top: 8, bottom: 8),
             color: UIColors.white,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space16, vertical: SpaceValues.space8),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: SpaceValues.space16,
+                  vertical: SpaceValues.space8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Expanded(
-                  //   child: TextFormField(
-                  //     controller: viewModel.inputOrderCode,
-                  //     keyboardType: TextInputType.number,
-                  //     decoration: InputDecoration(
-                  //       prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
-                  //       prefixIcon: Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
-                  //         child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
-                  //       ),
-                  //       hintText: 'Nhập mã vận đơn',
-                  //       // errorText: viewModel.validBarcode.value,
-                  //     ),
-                  //   ),
-                  //
-                  // ),
-
                   Expanded(
-                     child: Obx(() {
-                      return
-                        Form(
-                            key: viewModel.formKey,
-                            child: TextFormField(
-                              controller: viewModel.inputOrderCode,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                prefixIconConstraints: const BoxConstraints(minHeight: SpaceValues.space24, maxHeight: SpaceValues.space24, minWidth: 0),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: SpaceValues.space8),
-                                  child: SvgPicture.asset('resources/icons/loading.png', color: UIColors.black70,),
+                    child: Obx(() {
+                      return Form(
+                          key: viewModel.formKey,
+                          child: TextFormField(
+                            controller: viewModel.inputOrderCode,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              prefixIconConstraints: const BoxConstraints(
+                                  minHeight: SpaceValues.space24,
+                                  maxHeight: SpaceValues.space24,
+                                  minWidth: 0),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: SpaceValues.space8),
+                                child: SvgPicture.asset(
+                                  'resources/icons/loading.png',
+                                  color: UIColors.black70,
                                 ),
-                                hintText: 'Nhập số serial',
-                                errorText: viewModel.validBarcode.value,
                               ),
-                            ));
-
-                  }),
-                   ),
-                  const SizedBox(width: SpaceValues.space12,),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: UIColors.black70,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        // padding: const EdgeInsets.symmetric(vertical: 9.5),
-                        minimumSize: Size.zero,
-                        fixedSize: const Size(56, 42)
-                    ),
-                    onPressed: ()=>{
-                      viewModel.onSearch()
-                    },
-                    // viewModel.btnQRScaner,
-                    child: Center(child: Icon(Icons.search,color: UIColors.white, size: 25)),
+                              hintText: 'Nhập mã vận đơn',
+                              errorText: viewModel.validBarcode.value,
+                            ),
+                          ));
+                    }),
                   ),
-                  SizedBox(width: SpaceValues.space8,),
+                  const SizedBox(
+                    width: SpaceValues.space12,
+                  ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: UIColors.appBar,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Colors.black)
+                        ),
+                        primary: Colors.white,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         // padding: const EdgeInsets.symmetric(vertical: 9.5),
                         minimumSize: Size.zero,
-                        fixedSize: const Size(56, 42)
-                    ),
-                    onPressed: ()=>{
-                      btnQRScaner()
-                    },
+                        fixedSize: const Size(56, 42)),
+                    onPressed: () => {viewModel.onSearch()},
                     // viewModel.btnQRScaner,
-                    child: Center(child: Icon(Icons.qr_code,color: UIColors.white, size: 25)),
+                    child: const Center(
+                        child: Icon(Icons.search,
+                            color: UIColors.black, size: 25)),
+                  ),
+                  const SizedBox(
+                    width: SpaceValues.space8,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                        ),
+                        primary: UIColors.black50,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        // padding: const EdgeInsets.symmetric(vertical: 9.5),
+                        minimumSize: Size.zero,
+                        fixedSize: const Size(56, 42)),
+                    onPressed: () => {btnQRScaner()},
+                    // viewModel.btnQRScaner,
+                    child: Center(
+                        child: Icon(Icons.qr_code,
+                            color: UIColors.white, size: 25)),
                   ),
                 ],
               ),
@@ -116,9 +119,254 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders,OrderModel>{
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(top: 4,bottom: SpaceValues.space32),
+                margin: EdgeInsets.only(top: 4, bottom: SpaceValues.space32),
                 color: UIColors.white,
+                width: double.infinity,
                 height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Obx(()=> Visibility(
+                        visible: viewModel.orderReponese.value != null,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Card(
+                            margin:
+                            const EdgeInsets.only(bottom: SpaceValues.space16),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Order ID:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: UIColors.navNonSelected,
+                                              fontSize: 14),
+                                        ),
+                                        Text(
+                                          viewModel.orderReponese.value?.orderCode ?? '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: UIColors.black50,
+                                              fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: SpaceValues.space12,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: UIColors.yellow40,
+                                              borderRadius:
+                                              BorderRadius.circular(10)),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.real_estate_agent_outlined,
+                                              color: UIColors.yellow,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: SpaceValues.space16,
+                                        ),
+                                        Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: const [
+                                                Text(
+                                                  'Địa chỉ kho hàng:',
+                                                  style: TextStyle(
+                                                      color: UIColors.black70,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Quận 9, TP Hồ Chí Minh',
+                                                  style: TextStyle(
+                                                      color: UIColors.black,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                )
+                                              ],
+                                            ))
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 12),
+                                      child: Column(
+                                        children: const [
+                                          Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                            size: 10,
+                                            color: UIColors.black50,
+                                          ),
+                                          Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                            size: 10,
+                                            color: UIColors.black50,
+                                          ),
+                                          Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                            size: 12,
+                                            color: UIColors.black50,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: UIColors.yellow40,
+                                              borderRadius:
+                                              BorderRadius.circular(10)),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.location_on_outlined,
+                                              color: UIColors.yellow,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: SpaceValues.space16,
+                                        ),
+                                        Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: const [
+                                                Text(
+                                                  'Địa chỉ giao hàng:',
+                                                  style: TextStyle(
+                                                      color: UIColors.black70,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Quận 9, TP Hồ Chí Minh',
+                                                  style: TextStyle(
+                                                      color: UIColors.black,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                )
+                                              ],
+                                            ))
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: SpaceValues.space24,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.local_offer_outlined,
+                                          color: UIColors.black70,
+                                        ),
+                                        SizedBox(
+                                          width: SpaceValues.space4,
+                                        ),
+                                        Text(
+                                          '500.000',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: UIColors.black,
+                                              fontSize: 14),
+                                        ),
+                                        Text(
+                                          'đ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: UIColors.black,
+                                              fontSize: 14),
+                                        ),
+                                        SizedBox(
+                                          width: SpaceValues.space24,
+                                        ),
+                                        Icon(
+                                          Icons.access_time,
+                                          color: UIColors.black70,
+                                        ),
+                                        SizedBox(
+                                          width: SpaceValues.space4,
+                                        ),
+                                        Text(
+                                          '12:00',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: UIColors.black,
+                                              fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: SpaceValues.space24,
+                                    ),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: SpaceValues.space32,
+                                            right: SpaceValues.space32),
+                                        child: SizedBox(
+                                          // width: width *0.4,
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(10),
+                                              ),
+                                              primary: UIColors.green, // background
+                                              onPrimary: Colors.white,
+                                              // foreground
+                                            ),
+                                            onPressed: () => {},
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(4),
+                                              child: Text('TIẾP NHẬN',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: UIColors.white,
+                                                      fontWeight: FontWeight.w600)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      replacement: Container(
+                        color: UIColors.white,
+                        child: SvgPicture.asset('resources/images/search.svg'),
+                      ),
+                      //   replacement: const LoadingDialog(
+                      //   backgroundColor: Colors.transparent,
+                      //   message: 'Đang tìm kiếm sản phẩm',
+                      //   elevation: 0,
+                      // ),
+                    ))
+                  ],
+                ),
               ),
             ),
           ),
@@ -126,6 +374,7 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders,OrderModel>{
       ),
     );
   }
+
   void btnQRScaner() {
     Get.to(GlobalQRScannerScreen(
       onDetect: (barcode, args) {
@@ -138,12 +387,10 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders,OrderModel>{
         // }
         // inputBarcode.text = result ?? '';
         Get.back();
-
       },
     ));
   }
 
   @override
   OrderModel createViewModel() => getIt<OrderModel>();
-
 }

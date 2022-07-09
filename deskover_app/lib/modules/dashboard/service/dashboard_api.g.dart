@@ -18,17 +18,19 @@ class _DashboardAPI implements DashboardAPI {
   String? baseUrl;
 
   @override
-  Future<void> getDashBoard() async {
+  Future<String> getTotalPerMonth(userModified) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'userModified': userModified};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    await _dio.fetch<void>(_setStreamType<void>(
+    final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'v1/api/admin/shipping',
+            .compose(_dio.options, '/v1/api/admin/order-total-per-month',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return null;
+    final value = _result.data!;
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
