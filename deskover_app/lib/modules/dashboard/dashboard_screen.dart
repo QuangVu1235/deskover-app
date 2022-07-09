@@ -5,6 +5,7 @@ import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import 'chart_bar.dart';
 import 'dashboard_model.dart';
@@ -18,6 +19,13 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
 
+  @override
+  void initState(){
+    super.initState();
+    viewModel.getPriceByMonth();
+    print('total');
+    print(viewModel.totalPricePerMonth.value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,23 +198,62 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              ' 000',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            Text('đ')
+                                            Obx(
+                                                ()=> Expanded(
+                                                  child: RichText(
+                                                      textAlign: TextAlign.center,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      text: TextSpan(
+                                                          text: viewModel.totalPricePerMonth.value,
+                                                          style: const TextStyle(
+
+                                                              color: UIColors.black,
+                                                              fontSize: 16, fontWeight: FontWeight.w700
+                                                          ),
+                                                          children: const <TextSpan>[
+                                                            TextSpan(
+                                                                text: ' đ',
+                                                                style: TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.w400
+                                                                )
+                                                            )
+                                                          ]
+                                                      )),
+                                                )),
+
+                                            // Obx(
+                                            //    ()=>Text(
+                                            //         viewModel.totalPricePerMonth.value,
+                                            //         textAlign: TextAlign.center,
+                                            //         style: TextStyle(
+                                            //             fontSize: 16,
+                                            //             fontWeight: FontWeight.w700),
+                                            // ),),
+
                                           ],
                                         ),
-                                        const Text(
-                                          "Tổng số đơn hàng",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
-                                        ),
+                                         Row(
+                                           mainAxisAlignment: MainAxisAlignment.center,
+                                           children: [
+                                             Text(
+                                              "Tổng doanh thu tháng: ",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                             Obx(
+                                                 ()=>Text(
+                                                   viewModel.month.value,
+                                                   textAlign: TextAlign.center,
+                                                   style: TextStyle(
+                                                       fontSize: 14,
+                                                       fontWeight: FontWeight.w700),
+                                                 ))
+
+                                           ],
+                                         ),
                                       ],
                                     ),
                                   ),

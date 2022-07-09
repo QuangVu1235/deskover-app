@@ -10,6 +10,6 @@ class DashBoardUserCase {
   @factoryMethod
   DashBoardUserCase(this._dashBoardDataSource);
 
-  Future<Message> getPricePerMonth(String userModified) =>
+  Future<String> getPricePerMonth(String userModified) =>
       _dashBoardDataSource.getPricePerMonth(userModified);
 }

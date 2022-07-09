@@ -18,19 +18,18 @@ class _DashboardAPI implements DashboardAPI {
   String? baseUrl;
 
   @override
-  Future<Message> getTotalPerMonth(userModified) async {
+  Future<String> getTotalPerMonth(userModified) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'userModified': userModified};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Message>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/admin/order-total-per-month',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Message.fromJson(_result.data!);
+    final _result = await _dio.fetch<String>(_setStreamType<String>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v1/api/admin/order-total-per-month',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 

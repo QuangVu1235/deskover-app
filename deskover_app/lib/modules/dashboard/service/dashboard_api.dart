@@ -12,6 +12,6 @@ abstract class DashboardAPI {
   factory DashboardAPI(Dio dio) = _DashboardAPI;
 
   @GET('/v1/api/admin/order-total-per-month')
-  Future<Message> getTotalPerMonth(@Query('userModified') String? userModified);
+  Future<String> getTotalPerMonth(@Query('userModified') String? userModified);
 
 }
