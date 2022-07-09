@@ -1,4 +1,5 @@
 import 'package:deskover_app/modules/receive_orders/service/service/order_service.dart';
+import 'package:deskover_app/usercases/dashboard_usercase.dart';
 import 'package:deskover_app/usercases/order_usercase.dart';
 import 'package:deskover_app/utils/widgets/view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import '../../entity/order/order_response.dart';
 
 @Injectable()
 class OrderModel extends ViewModel{
+
     final OrderUsercase _orderUsercase;
 
     TextEditingController inputOrderCode = TextEditingController();

@@ -1,5 +1,6 @@
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/entity/sign/response/sign_response.dart';
+import 'package:deskover_app/modules/dashboard/dashboard_screen.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/usercases/sign_usecase.dart';
 import 'package:deskover_app/utils/widgets/view_model.dart';

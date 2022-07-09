@@ -10,9 +10,11 @@ part 'find_by_order_code_api.g.dart';
 @RestApi(baseUrl: BaseApi.baseUrl)
 @LazySingleton()
 abstract class OrderApi{
+
     @factoryMethod
     factory OrderApi(Dio dio) = _OrderApi;
 
     @GET('/v1/api/admin/order/{orderCode}')
     Future<OrderReponse> getByOrderCodeAndStatusCode(@Path('orderCode') String orderCode,@Query('status') String? status);
+
 }

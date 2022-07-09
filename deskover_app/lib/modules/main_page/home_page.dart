@@ -27,6 +27,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
   void initState() {
     super.initState();
     viewModel.index.value = widget.indexTap ?? viewModel.index.value ;
+    print( viewModel.index.value);
   }
   static final List<Widget> _widgetOptions = <Widget>[
           const DashboardScreen(),
@@ -63,13 +64,13 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
             tabBackgroundColor: Colors.grey[100]!,
             color: Colors.black,
             // backgroundColor: UIColors.white,
-            tabs:  const [
+            tabs:   const [
               GButton(
-                icon: LineIcons.home,
+                icon:  LineIcons.home ,
                 text: 'Home',
               ),
               GButton(
-                icon: LineIcons.search,
+                icon:  LineIcons.search,
                 text: 'Search',
               ),
               GButton(
@@ -77,7 +78,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                 text: 'Likes',
               ),
               GButton(
-                icon: LineIcons.user,
+                icon:LineIcons.user,
                 text: 'Profile',
               ),
             ],
