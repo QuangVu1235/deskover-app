@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../entity/order/order_response.dart';
+import '../../../entity/order/order_responses.dart';
 
 part 'find_by_order_code_api.g.dart';
 
@@ -15,6 +16,6 @@ abstract class OrderApi{
     factory OrderApi(Dio dio) = _OrderApi;
 
     @GET('/v1/api/admin/order/{orderCode}')
-    Future<OrderReponse> getByOrderCodeAndStatusCode(@Path('orderCode') String orderCode,@Query('status') String? status);
+    Future<OrderReponses> getByOrderCodeAndStatusCode(@Path('orderCode') String orderCode,@Query('status') String? status);
 
 }

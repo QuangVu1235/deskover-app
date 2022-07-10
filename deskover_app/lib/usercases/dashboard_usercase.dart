@@ -1,6 +1,8 @@
 import 'package:deskover_app/modules/dashboard/dashboard_datasource.dart';
 import 'package:injectable/injectable.dart';
 
+import '../modules/dashboard/reponse/message.dart';
+
 @LazySingleton()
 class DashBoardUserCase {
   final DashBoardDataSource _dashBoardDataSource;
@@ -8,6 +10,9 @@ class DashBoardUserCase {
   @factoryMethod
   DashBoardUserCase(this._dashBoardDataSource);
 
-  Future<String> getPricePerMonth(String userModified) =>
-      _dashBoardDataSource.getPricePerMonth(userModified);
+  Future<String> getPricePerMonth() =>
+      _dashBoardDataSource.getPricePerMonth();
+
+  Future<String> getCountOrderPerMonth() =>
+      _dashBoardDataSource.getCountOrderPerMonth();
 }

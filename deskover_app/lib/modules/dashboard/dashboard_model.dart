@@ -1,38 +1,46 @@
-import 'package:deskover_app/modules/dashboard/reponse/message.dart';
+import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/usercases/dashboard_usercase.dart';
 import 'package:deskover_app/utils/widgets/view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../entity/order/order_response.dart';
-
 @injectable
-class DashBoardModel extends ViewModel {
-  final DashBoardUserCase _dashBoardUserCase;
+class DashBoardModel extends ViewModel{
 
-  // final Rx<String?> pricePerMonth = Rx<String?>(null);
-  // final Rxn<Message> pricePerMonth = Rxn();
-  // final Rxn<OrderReponse> orderReponese = Rxn();
-
-  final Rx<String> pricePerMonth = ''.obs;
-
+  final DashBoardUserCase _boardUserCase;
+  // final RxList<String> listData = Rxn
+  final RxString totalPricePerMonth = ''.obs;
+  final RxString countOrderPerMonth = ''.obs;
+  final RxString month = ''.obs;
   @factoryMethod
-  DashBoardModel(this._dashBoardUserCase);
+  DashBoardModel(this._boardUserCase);
 
   @override
-  initState() {
-    print('1111111111111111111111');
-    getPerMonth();
-    print(pricePerMonth.value);
+  void initState()  {
+    super.initState();
+    refresh();
   }
 
-  getPerMonth() async {
-    pricePerMonth.value = '';
-    loading(() async{
-      await _dashBoardUserCase.getPricePerMonth('minhnh').then((value) {
-        pricePerMonth.value = value;
-      });
+  Future<void> refresh() => Future.wait([
+        getPriceByMonth(),
+        getCountOrderPerMonth()
+  ]);
+
+ Future<void> getPriceByMonth() async{
+    month.value = '';
+    var now = DateTime.now();
+    month.value = now.month.toString();
+
+    totalPricePerMonth.value = '';
+   _boardUserCase.getPricePerMonth().then((value) async{
+        totalPricePerMonth.value = value;
+   });
+  }
+  Future<void> getCountOrderPerMonth() async{
+    _boardUserCase.getCountOrderPerMonth().then((value) async {
+      countOrderPerMonth.value = value;
     });
-
   }
+
 }

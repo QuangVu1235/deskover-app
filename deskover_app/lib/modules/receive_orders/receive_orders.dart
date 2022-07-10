@@ -1,6 +1,7 @@
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,18 +15,10 @@ class ReceiveOrders extends StatefulWidget {
   const ReceiveOrders({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ReceiveOrders();
+  State<ReceiveOrders> createState() => _ReceiveOrders();
 }
 
 class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
-  @override
-  void initState() {
-    super.initState();
-    print('12321321321');
-    print(viewModel.orderReponese.value?.orderCode);
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,7 +126,13 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                             margin:
                             const EdgeInsets.only(bottom: SpaceValues.space16),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                                side: const BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: UIColors.black10,
+                                  width: 1
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                            ),
                             child: SizedBox(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
@@ -144,19 +143,19 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          'Order ID:',
+                                        const Text(
+                                          'Mã vận đơn:',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600,
-                                              color: UIColors.navNonSelected,
+                                              color: UIColors.black50,
                                               fontSize: 14),
                                         ),
                                         Text(
                                           viewModel.orderReponese.value?.orderCode ?? '',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: UIColors.black50,
-                                              fontSize: 14),
+                                              color: UIColors.black,
+                                              fontSize: 16),
                                         ),
                                       ],
                                     ),
@@ -250,8 +249,8 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                               crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                               mainAxisAlignment: MainAxisAlignment.start,
-                                              children: const [
-                                                Text(
+                                              children:  [
+                                                const Text(
                                                   'Địa chỉ giao hàng:',
                                                   style: TextStyle(
                                                       color: UIColors.black70,
@@ -259,56 +258,56 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                                       fontWeight: FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  'Quận 9, TP Hồ Chí Minh',
-                                                  style: TextStyle(
+                                                  viewModel.orderReponese.value?.address ?? '',
+                                                  style: const TextStyle(
                                                       color: UIColors.black,
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight: FontWeight.w700),
                                                 )
                                               ],
                                             ))
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: SpaceValues.space24,
+                                      height: SpaceValues.space16,
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(
+                                      children:  [
+                                        const Icon(
                                           Icons.local_offer_outlined,
                                           color: UIColors.black70,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: SpaceValues.space4,
                                         ),
                                         Text(
-                                          '500.000',
-                                          style: TextStyle(
+                                          viewModel.orderReponese.value?.totalPrice ?? '',
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: UIColors.black,
                                               fontSize: 14),
                                         ),
-                                        Text(
+                                        const Text(
                                           'đ',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: UIColors.black,
                                               fontSize: 14),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: SpaceValues.space24,
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.access_time,
                                           color: UIColors.black70,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: SpaceValues.space4,
                                         ),
-                                        Text(
-                                          '12:00',
-                                          style: TextStyle(
+                                         Text(
+                                          viewModel.orderReponese.value?.createdAt?.substring(0,10) ?? '',
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: UIColors.black,
                                               fontSize: 14),
@@ -316,7 +315,7 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: SpaceValues.space24,
+                                      height: SpaceValues.space16,
                                     ),
                                     Center(
                                       child: Padding(
