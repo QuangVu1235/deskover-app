@@ -18,19 +18,19 @@ class _OrderApi implements OrderApi {
   String? baseUrl;
 
   @override
-  Future<OrderReponse> getByOrderCodeAndStatusCode(orderCode, status) async {
+  Future<OrderReponses> getByOrderCodeAndStatusCode(orderCode, status) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'status': status};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<OrderReponse>(
+        _setStreamType<OrderReponses>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/api/admin/order/${orderCode}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = OrderReponse.fromJson(_result.data!);
+    final value = OrderReponses.fromJson(_result.data!);
     return value;
   }
 

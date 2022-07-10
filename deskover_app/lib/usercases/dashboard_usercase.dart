@@ -10,6 +10,9 @@ class DashBoardUserCase {
   @factoryMethod
   DashBoardUserCase(this._dashBoardDataSource);
 
-  Future<String> getPricePerMonth(String userModified) =>
-      _dashBoardDataSource.getPricePerMonth(userModified);
+  Future<String> getPricePerMonth() =>
+      _dashBoardDataSource.getPricePerMonth();
+
+  Future<String> getCountOrderPerMonth() =>
+      _dashBoardDataSource.getCountOrderPerMonth();
 }

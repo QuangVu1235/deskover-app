@@ -18,15 +18,29 @@ class _DashboardAPI implements DashboardAPI {
   String? baseUrl;
 
   @override
-  Future<String> getTotalPerMonth(userModified) async {
+  Future<String> getTotalPerMonth() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'userModified': userModified};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'GET', headers: _headers, extra: _extra)
             .compose(_dio.options, '/v1/api/admin/order-total-per-month',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
+    return value;
+  }
+
+  @override
+  Future<String> getCountOrderPerMonth() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(_setStreamType<String>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/v1/api/admin/order-count-order-per-month',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;

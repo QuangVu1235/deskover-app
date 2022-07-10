@@ -2,6 +2,7 @@ import 'package:deskover_app/modules/receive_orders/service/service/order_servic
 import 'package:injectable/injectable.dart';
 
 import '../entity/order/order_response.dart';
+import '../entity/order/order_responses.dart';
 
 @LazySingleton()
 class OrderUsercase {
@@ -10,7 +11,7 @@ class OrderUsercase {
   @factoryMethod
   OrderUsercase(this._orderService);
 
-  Future<OrderReponse> findByOrderCode(String orderCode, String status)
+  Future<OrderReponses> findByOrderCode(String orderCode, String status)
   => _orderService.findByOrderCode(orderCode, status);
 
 }

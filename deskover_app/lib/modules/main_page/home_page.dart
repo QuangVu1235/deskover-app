@@ -14,20 +14,19 @@ import '../order/home_order.dart';
 import '../receive_orders/receive_orders.dart';
 
 class HomePage extends StatefulWidget {
-  int? indexTap;
+ const HomePage({Key? key, this.indexTap}) : super(key: key);
+ final int? indexTap;
 
-  HomePage({Key? key, this.indexTap}) : super(key: key);
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
-    viewModel.index.value = widget.indexTap ?? viewModel.index.value ;
-    print( viewModel.index.value);
+    // viewModel.index.value = widget.indexTap ?? viewModel.index.value;
   }
   static final List<Widget> _widgetOptions = <Widget>[
           const DashboardScreen(),
@@ -37,60 +36,63 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Obx(() => _widgetOptions[viewModel.index.value]),
-      ),
-      bottomNavigationBar:
-      Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
-            )
-          ],
-        ),
-        child: SafeArea(
-          child: GNav(
-            rippleColor: Colors.grey[300]!,
-            hoverColor: Colors.grey[100]!,
-            gap: 8,
-            activeColor: Colors.black,
-            iconSize: 24,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            duration: Duration(milliseconds: 400),
-            tabBackgroundColor: Colors.grey[100]!,
-            color: Colors.black,
-            // backgroundColor: UIColors.white,
-            tabs:   const [
-              GButton(
-                icon:  LineIcons.home ,
-                text: 'Home',
-              ),
-              GButton(
-                icon:  LineIcons.search,
-                text: 'Search',
-              ),
-              GButton(
-                icon: LineIcons.heart,
-                text: 'Likes',
-              ),
-              GButton(
-                icon:LineIcons.user,
-                text: 'Profile',
-              ),
-            ],
-            selectedIndex: viewModel.index.value,
-            onTabChange: (index) {
-              viewModel.index.value = index;
-            },
+    return Obx(
+        ()=>Scaffold(
+
+            body: Center(
+            child: Obx(() => _widgetOptions[viewModel.index.value]),
           ),
-        ),
-      ),
+          bottomNavigationBar:
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 20,
+                  color: Colors.black.withOpacity(.1),
+                )
+              ],
+            ),
+            child: SafeArea(
+              child: GNav(
+                rippleColor: Colors.grey[300]!,
+                hoverColor: Colors.grey[100]!,
+                gap: 8,
+                activeColor: Colors.black,
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                duration: Duration(milliseconds: 400),
+                tabBackgroundColor: Colors.grey[100]!,
+                color: Colors.black,
+                // backgroundColor: UIColors.white,
+                tabs:   const [
+                  GButton(
+                    icon:  LineIcons.home ,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon:  LineIcons.search,
+                    text: 'Search',
+                  ),
+                  GButton(
+                    icon: LineIcons.heart,
+                    text: 'Likes',
+                  ),
+                  GButton(
+                    icon:LineIcons.user,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: viewModel.index.value,
+                onTabChange: (index) {
+                  viewModel.index.value = index;
+                },
+              ),
+            ),
+          ),
 
 
+        )
     );
   }
 

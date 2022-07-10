@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../entity/order/order_response.dart';
+import '../../entity/order/order_responses.dart';
 
 @Injectable()
 class OrderModel extends ViewModel{
@@ -17,7 +17,7 @@ class OrderModel extends ViewModel{
     final Rx<String?> validBarcode = Rx<String?>(null);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    final Rxn<OrderReponse> orderReponese = Rxn();
+    final Rxn<OrderReponses> orderReponese = Rxn();
 
     @factoryMethod
     OrderModel(this._orderUsercase);
@@ -46,7 +46,7 @@ class OrderModel extends ViewModel{
      await loading(() async{
        await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
          orderReponese.value = value;
-         print(orderReponese.value?.orderStatus?.code);
+
        }).catchError((error){
          orderReponese.value ?? '';
        });
