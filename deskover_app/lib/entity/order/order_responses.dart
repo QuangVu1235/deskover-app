@@ -76,12 +76,17 @@ class OrderItem{
 
   @JsonKey(name: 'name')
   String? name;
+
   @JsonKey(name: 'quantity')
   int? quantity;
+
+  @JsonKey(name: 'img')
+  String? img;
+
   @JsonKey(name: 'price')
   String? price;
 
-  OrderItem({this.name, this.quantity, this.price});
+  OrderItem({this.name, this.quantity, this.price,this.img});
 
   factory OrderItem.fromJson(Map<String, dynamic> json) =>
       _$OrderItemFromJson(json);

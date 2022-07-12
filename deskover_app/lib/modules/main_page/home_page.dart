@@ -4,6 +4,7 @@ import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -11,7 +12,7 @@ import 'package:line_icons/line_icons.dart';
 import '../dashboard/chart_bar.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../order/home_order.dart';
-import '../receive_orders/receive_orders.dart';
+import '../receive_orders/find_order.dart';
 
 class HomePage extends StatefulWidget {
  const HomePage({Key? key, this.indexTap}) : super(key: key);
@@ -32,7 +33,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
           const DashboardScreen(),
           const ReceiveOrders(),
           HomeOrderScreen(),
-          const BarChartSample1()
+          const BarChartSample()
   ];
   @override
   Widget build(BuildContext context) {
@@ -58,25 +59,27 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                 rippleColor: Colors.grey[300]!,
                 hoverColor: Colors.grey[100]!,
                 gap: 8,
-                activeColor: Colors.black,
+                activeColor: UIColors.appBar,
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: Duration(milliseconds: 400),
                 tabBackgroundColor: Colors.grey[100]!,
                 color: Colors.black,
                 // backgroundColor: UIColors.white,
-                tabs:   const [
+                tabs:   [
                   GButton(
                     icon:  LineIcons.home ,
-                    text: 'Home',
+                    text: 'Trang chủ',
+
                   ),
                   GButton(
                     icon:  LineIcons.search,
-                    text: 'Search',
+                    text: 'Tìm kiếm',
+
                   ),
                   GButton(
-                    icon: LineIcons.heart,
-                    text: 'Likes',
+                    icon: LineIcons.dropbox,
+                    text: 'Đơn hàng',
                   ),
                   GButton(
                     icon:LineIcons.user,

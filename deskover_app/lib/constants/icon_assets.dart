@@ -6,3 +6,8 @@ class IconAssets{
 
   static const String logo= 'resources/icons/logo.png';
 }
+class ImageAssets {
+  static const String imgPlaceholder = 'resources/images/img_placeholder.png';
+
+  ImageAssets(String s);
+}
