@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../themes/dialogs/loading_dialog.dart';
 import '../main_page/home_page.dart';
 import 'chart_bar.dart';
 import 'dashboard_model.dart';
@@ -19,7 +20,11 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
-
+  @override
+  void initState() {
+    super.initState();
+    viewModel.doGetToTalPrice7DaysAgo;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -294,7 +299,17 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
                             const SizedBox(
                               height: SpaceValues.space12,
                             ),
-                            BarChartSample1(),
+                            Obx(
+                                ()=> Visibility(
+                                  visible: viewModel.totalPrice7DaysAgo.isEmpty,
+                                  child: const LoadingDialog(
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                    message: 'Đang tìm thống kê...',
+                                  ),
+                                  replacement: BarChartSample()  ,
+                                ))
+
                           ],
                         ),
                       ),

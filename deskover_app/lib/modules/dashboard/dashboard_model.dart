@@ -1,3 +1,4 @@
+import 'package:deskover_app/modules/dashboard/reponse/order7ago.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/usercases/dashboard_usercase.dart';
 import 'package:deskover_app/utils/widgets/view_model.dart';
@@ -9,7 +10,9 @@ import 'package:injectable/injectable.dart';
 class DashBoardModel extends ViewModel{
 
   final DashBoardUserCase _boardUserCase;
-  // final RxList<String> listData = Rxn
+
+  final RxList<TotalPrice7DaysAgo> totalPrice7DaysAgo = RxList.empty();
+
   final RxString totalPricePerMonth = ''.obs;
   final RxString countOrderPerMonth = ''.obs;
   final RxString month = ''.obs;
@@ -17,14 +20,17 @@ class DashBoardModel extends ViewModel{
   DashBoardModel(this._boardUserCase);
 
   @override
-  void initState()  {
+  void initState() async  {
     super.initState();
+    print('111111111111111111');
+    print(totalPrice7DaysAgo.value);
     refresh();
   }
 
   Future<void> refresh() => Future.wait([
         getPriceByMonth(),
-        getCountOrderPerMonth()
+        getCountOrderPerMonth(),
+       doGetToTalPrice7DaysAgo()
   ]);
 
  Future<void> getPriceByMonth() async{
@@ -42,5 +48,17 @@ class DashBoardModel extends ViewModel{
       countOrderPerMonth.value = value;
     });
   }
+
+  Future<void> doGetToTalPrice7DaysAgo() async{
+    loading(()async{
+      await _boardUserCase.doGetTotalPrice7DaysAgo().then((value) async{
+        totalPrice7DaysAgo.value = value.data ?? [TotalPrice7DaysAgo()];
+      });
+    }).then((value) async{
+
+    });
+  }
+
+
 
 }

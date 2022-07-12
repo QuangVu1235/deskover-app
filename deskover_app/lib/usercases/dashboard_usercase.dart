@@ -1,7 +1,7 @@
 import 'package:deskover_app/modules/dashboard/dashboard_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-import '../modules/dashboard/reponse/message.dart';
+import '../modules/dashboard/reponse/order7ago.dart';
 
 @LazySingleton()
 class DashBoardUserCase {
@@ -15,4 +15,7 @@ class DashBoardUserCase {
 
   Future<String> getCountOrderPerMonth() =>
       _dashBoardDataSource.getCountOrderPerMonth();
+
+  Future<DataTotalPrice7Ago> doGetTotalPrice7DaysAgo()
+  => _dashBoardDataSource.doGetTotalPrice7DaysAgo();
 }

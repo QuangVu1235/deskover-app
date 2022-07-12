@@ -1,10 +1,17 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
+import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class BarChartSample1 extends StatefulWidget {
+import '../../themes/dialogs/loading_dialog.dart';
+import 'dashboard_model.dart';
+
+class BarChartSample extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -14,19 +21,19 @@ class BarChartSample1 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample1({Key? key}) : super(key: key);
+  const BarChartSample({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarChartSample1State extends ViewWidget<BarChartSample,DashBoardModel> {
   final Color barBackgroundColor = const Color(0xb802a983);
   final Duration animDuration = const Duration(milliseconds: 250);
-
+  final formatCurrency = NumberFormat.currency(locale:"vi_VN", symbol: "đ");
   int touchedIndex = -1;
-
   bool isPlaying = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,32 +47,46 @@ class BarChartSample1State extends State<BarChartSample1> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  const Text(
-                    'Tổng số đơn hàng của bạn',
-                    style: TextStyle(
-                        color: UIColors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 38,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: BarChart(
-                        mainBarData(),
-                        swapAnimationDuration: animDuration,
+              child: ListView(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        'Tổng tiền 7 ngày',
+                        style: TextStyle(
+                            color: UIColors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
+                      const SizedBox(
+                        height: 38,
+                      ),
+                      Obx(()=> SizedBox(
+                        height: MediaQuery.of(context).size.height *0.33,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Visibility(
+                            visible: viewModel.totalPrice7DaysAgo.isEmpty,
+                            child:  const LoadingDialog(
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                              message: 'Đang tìm thống kê...',
+                            ),
+                            replacement: BarChart(
+                              mainBarData(),
+                              swapAnimationDuration: animDuration,
+                            ) ,
+
+                          )
+
+                        ),
+                      ),),
+                      // const SizedBox(
+                      //   height: 12,
+                      // ),
+                    ],
                   ),
                 ],
               ),
@@ -74,6 +95,7 @@ class BarChartSample1State extends State<BarChartSample1> {
         ),
       ),
     );
+
   }
 
   BarChartGroupData makeGroupData(
@@ -107,58 +129,79 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+            return makeGroupData(0,viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[6].totalPrice! : 0, isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[5].totalPrice! : 0, isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+            return makeGroupData(2, viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[4].totalPrice! : 0, isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[3].totalPrice! : 0, isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[2].totalPrice! : 0, isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[1].totalPrice! : 0, isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, 1000000000, isTouched: i == touchedIndex);
+            return makeGroupData(6,viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[0].totalPrice! : 0, isTouched: i == touchedIndex);
           default:
             return throw Error();
         }
       });
+  List<BarChartGroupData> showingGroups1() => List.generate(7, (i) {
+    switch (i) {
+      case 0:
+        return makeGroupData(0,  0, isTouched: i == touchedIndex);
+      case 1:
+        return makeGroupData(1,  0, isTouched: i == touchedIndex);
+      case 2:
+        return makeGroupData(2,  0, isTouched: i == touchedIndex);
+      case 3:
+        return makeGroupData(3,  0, isTouched: i == touchedIndex);
+      case 4:
+        return makeGroupData(4,  0, isTouched: i == touchedIndex);
+      case 5:
+        return makeGroupData(5,  0, isTouched: i == touchedIndex);
+      case 6:
+        return makeGroupData(6,  0, isTouched: i == touchedIndex);
+      default:
+        return throw Error();
+    }
+  });
 
   BarChartData mainBarData() {
+
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              String weekDay;
+              String? weekDay;
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = 'Ngày 1';
+                  weekDay = viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[6].priceFormat : 'Ngày 1';
                   break;
                 case 1:
-                  weekDay = 'Ngày 2';
+                  weekDay =viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[5].date : 'Ngày 2';
                   break;
                 case 2:
-                  weekDay = 'Ngày 3';
+                  weekDay =viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[4].date : 'Ngày 3';
                   break;
                 case 3:
-                  weekDay = 'Ngày 4';
+                  weekDay =viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[3].date : 'Ngày 4';
                   break;
                 case 4:
-                  weekDay = 'Ngày 5';
+                  weekDay =viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[2].date : 'Ngày 5';
                   break;
                 case 5:
-                  weekDay = 'Ngày 6';
+                  weekDay = viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[1].date : 'Ngày 6';
                   break;
                 case 6:
-                  weekDay = 'Hôm nay';
+                  weekDay = viewModel.totalPrice7DaysAgo.isNotEmpty ? viewModel.totalPrice7DaysAgo[0].date : 'Hôm nay';
                   break;
                 default:
                   throw Error();
               }
               return BarTooltipItem(
-                weekDay + '\n',
+                weekDay.toString() + '\n',
                 const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -166,7 +209,9 @@ class BarChartSample1State extends State<BarChartSample1> {
                 ),
                 children: <TextSpan>[
                   TextSpan(
-                    text: (rod.toY - 1).toString(),
+                    text:
+                    // (rod.toY - 1).toInt(),
+                    formatCurrency.format((rod.toY - 1).toInt()) ,
                     style: const TextStyle(
                       color: Colors.yellow,
                       fontSize: 16,
@@ -265,4 +310,7 @@ class BarChartSample1State extends State<BarChartSample1> {
       await refreshState();
     }
   }
+
+  @override
+  DashBoardModel createViewModel() =>  getIt<DashBoardModel>();
 }

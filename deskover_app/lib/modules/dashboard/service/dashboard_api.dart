@@ -1,5 +1,5 @@
 import 'package:deskover_app/config/base_api.dart';
-import 'package:deskover_app/modules/dashboard/reponse/message.dart';
+import 'package:deskover_app/modules/dashboard/reponse/order7ago.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
@@ -16,5 +16,8 @@ abstract class DashboardAPI {
 
   @GET('/v1/api/admin/order-count-order-per-month')
   Future<String> getCountOrderPerMonth();
+
+  @GET('/v1/api/admin/order-7days')
+  Future<DataTotalPrice7Ago> doGetTotalPrice7DaysAgo();
 
 }
