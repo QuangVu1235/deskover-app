@@ -12,6 +12,7 @@ import 'package:line_icons/line_icons.dart';
 import '../dashboard/chart_bar.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../order/home_order.dart';
+import '../profile/flutter_slidable.dart';
 import '../receive_orders/find_order.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
           const DashboardScreen(),
           const ReceiveOrders(),
           HomeOrderScreen(),
-          const BarChartSample()
+          HomeOrderScreen(),
   ];
   @override
   Widget build(BuildContext context) {

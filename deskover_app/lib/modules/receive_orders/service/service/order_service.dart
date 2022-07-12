@@ -6,6 +6,7 @@ import '../find_by_order_code_api.dart';
 
 abstract class OrderService{
     Future<OrderReponses> findByOrderCode(String orderCode, String status);
+    Future<void> doPostPickupOrder(String orderCode, String status);
 }
 
 @LazySingleton(as:OrderService)
@@ -17,6 +18,10 @@ class OrderServiceImpl extends OrderService{
   @override
   Future<OrderReponses> findByOrderCode(String orderCode, String status)
     => _orderApi.getByOrderCodeAndStatusCode(orderCode, status);
+
+  @override
+  Future<void> doPostPickupOrder(String orderCode, String status)
+  => _orderApi.doPostPickupOrder(orderCode, status);
 
 
 }
