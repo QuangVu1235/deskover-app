@@ -6,6 +6,17 @@ part of 'order_responses.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+DataOrderReponse _$DataOrderReponseFromJson(Map<String, dynamic> json) =>
+    DataOrderReponse()
+      ..data = (json['data'] as List<dynamic>?)
+          ?.map((e) => OrderReponses.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$DataOrderReponseToJson(DataOrderReponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
 OrderReponses _$OrderReponsesFromJson(Map<String, dynamic> json) =>
     OrderReponses(
       id: json['id'] as int?,

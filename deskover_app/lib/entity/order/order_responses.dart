@@ -3,6 +3,19 @@ import 'package:json_annotation/json_annotation.dart';
 part 'order_responses.g.dart';
 
 @JsonSerializable()
+class DataOrderReponse{
+
+  DataOrderReponse();
+
+  @JsonKey(name:'data')
+  List<OrderReponses>? data;
+
+  factory DataOrderReponse.fromJson(Map<String, dynamic> json) =>
+      _$DataOrderReponseFromJson(json);
+  Map<String, dynamic> toJson() => _$DataOrderReponseToJson(this);
+}
+
+@JsonSerializable()
 class OrderReponses{
   @JsonKey(name: 'id')
   int? id;
