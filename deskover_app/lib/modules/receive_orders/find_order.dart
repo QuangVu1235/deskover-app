@@ -57,14 +57,14 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                   minHeight: SpaceValues.space24,
                                   maxHeight: SpaceValues.space24,
                                   minWidth: 0),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: SpaceValues.space8),
-                                child: SvgPicture.asset(
-                                  'resources/icons/loading.png',
-                                  color: UIColors.black70,
-                                ),
-                              ),
+                              // prefixIcon: Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: SpaceValues.space8),
+                              //   child: SvgPicture.asset(
+                              //     'resources/icons/loading.png',
+                              //     color: UIColors.black70,
+                              //   ),
+                              // ),
                               hintText: 'Nhập mã vận đơn',
                               errorText: viewModel.validBarcode.value,
                             ),
@@ -443,7 +443,9 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
                                               onPrimary: Colors.white,
                                               // foreground
                                             ),
-                                            onPressed: () => {},
+                                            onPressed: () async{
+                                               await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ?? '');
+                                            },
                                             child: const Padding(
                                               padding: EdgeInsets.all(4),
                                               child: Text('TIẾP NHẬN',

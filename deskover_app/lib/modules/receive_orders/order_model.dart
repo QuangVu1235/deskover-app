@@ -8,6 +8,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../entity/order/order_responses.dart';
+import '../../utils/AppUtils.dart';
 
 @Injectable()
 class OrderModel extends ViewModel{
@@ -34,6 +35,7 @@ class OrderModel extends ViewModel{
       return result;
     }
 
+
     onSearch() async{
       orderReponese.value = null;
       validBarcode.value = null;
@@ -43,14 +45,24 @@ class OrderModel extends ViewModel{
         });
         return;
       }
-     await loading(() async{
-       await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
-         orderReponese.value = value;
-
-       }).catchError((error){
-         orderReponese.value ?? '';
-       });
-     });
+      await loading(() async{
+        await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
+          orderReponese.value = value;
+        });
+      }).then((value) async{
+      });
+    }
+    Future<void> PickupOrder(String orderCode) async{
+      loading(() async{
+        await _orderUsercase.doPostPickupOrder(orderCode, 'LH-TC');
+      }).then((value) async {
+        orderReponese.value = null;
+        AppUtils().showPopup(
+          title: 'Thành công',
+          subtitle: 'Cập nhập thành công',
+          isSuccess: true
+        );
+      });
     }
     Future<void> loadOrderByCode() async{
       validBarcode.value = null;
@@ -65,5 +77,25 @@ class OrderModel extends ViewModel{
         orderReponese.value = value;
       });
     }
+// onSearch() async{
+//   orderReponese.value = null;
+//   validBarcode.value = null;
+//   if (!validAll() || !(formKey.currentState?.validate() ?? false)) {
+//     await loading(() async {
+//       throw 'Vui lòng kiểm tra lại thông tin';
+//     });
+//     return;
+//   }
+//  await loading(() async{
+//    await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
+//      orderReponese.value = value;
+//
+//    }).catchError((error){
+//
+//    });
+//  },showErrorDialog: true).then((result){
+//
+//  });
+// }
 
 }

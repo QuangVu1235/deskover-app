@@ -18,4 +18,7 @@ abstract class OrderApi{
     @GET('/v1/api/admin/order/{orderCode}')
     Future<OrderReponses> getByOrderCodeAndStatusCode(@Path('orderCode') String orderCode,@Query('status') String? status);
 
+    @POST('/v1/api/admin/order/{orderCode}')
+    Future<void> doPostPickupOrder(@Path('orderCode') String orderCode,@Query('status') String? status);
+
 }

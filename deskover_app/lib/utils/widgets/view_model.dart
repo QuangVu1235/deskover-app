@@ -40,7 +40,7 @@ class ViewModel {
       Map<String, dynamic> errorMap = {
         'status': error.response?.statusCode,
         'statusMessage': error.response?.statusMessage,
-        'message': jsonDecode(error.response.toString())?['error']?['errors']?['msg'],
+        'message': jsonDecode(error.response.toString())?['message'],
         'onemessage': jsonDecode(error.response.toString())?['message'],
         'validMessage': error.response?.data?['errors'].toString(),
       };
