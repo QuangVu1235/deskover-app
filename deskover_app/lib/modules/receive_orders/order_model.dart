@@ -14,14 +14,23 @@ import '../../utils/AppUtils.dart';
 class OrderModel extends ViewModel{
 
     final OrderUsercase _orderUsercase;
-    TextEditingController inputOrderCode = TextEditingController();
+    final TextEditingController inputOrderCode = TextEditingController();
     final Rx<String?> validBarcode = Rx<String?>(null);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+    final RxInt index = 0.obs;
 
     final Rxn<OrderReponses> orderReponese = Rxn();
 
     @factoryMethod
     OrderModel(this._orderUsercase);
+
+    @override
+    void initState() async  {
+      super.initState();
+    }
+
+
 
     bool validAll() {
       bool result = formKey.currentState?.validate() ?? false;
@@ -35,8 +44,7 @@ class OrderModel extends ViewModel{
       return result;
     }
 
-
-    onSearch() async{
+    Future<void> onSearch(String input,String status) async{
       orderReponese.value = null;
       validBarcode.value = null;
       if (!validAll() || !(formKey.currentState?.validate() ?? false)) {
@@ -46,56 +54,25 @@ class OrderModel extends ViewModel{
         return;
       }
       await loading(() async{
-        await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
+        await _orderUsercase.findByOrderCode(input, status).then((value) async{
           orderReponese.value = value;
         });
       }).then((value) async{
       });
     }
-    Future<void> PickupOrder(String orderCode) async{
+
+    Future<void> PickupOrder(String orderCode,String status) async{
       loading(() async{
-        await _orderUsercase.doPostPickupOrder(orderCode, 'LH-TC');
+        await _orderUsercase.doPostPickupOrder(orderCode, status);
       }).then((value) async {
-        orderReponese.value = null;
         AppUtils().showPopup(
           title: 'Thành công',
           subtitle: 'Cập nhập thành công',
           isSuccess: true
         );
+        Get.back();
       });
     }
-    Future<void> loadOrderByCode() async{
-      validBarcode.value = null;
-      orderReponese.value = null;
-      if (!validAll() || !(formKey.currentState?.validate() ?? false)) {
-        await loading(() async {
-          throw 'Vui lòng kiểm tra lại thông tin';
-        });
-        return;
-      }
-      await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
-        orderReponese.value = value;
-      });
-    }
-// onSearch() async{
-//   orderReponese.value = null;
-//   validBarcode.value = null;
-//   if (!validAll() || !(formKey.currentState?.validate() ?? false)) {
-//     await loading(() async {
-//       throw 'Vui lòng kiểm tra lại thông tin';
-//     });
-//     return;
-//   }
-//  await loading(() async{
-//    await _orderUsercase.findByOrderCode(inputOrderCode.text, 'C-LH').then((value) async{
-//      orderReponese.value = value;
-//
-//    }).catchError((error){
-//
-//    });
-//  },showErrorDialog: true).then((result){
-//
-//  });
-// }
+
 
 }

@@ -16,7 +16,7 @@ import '../modules/dashboard/dashboard_datasource.dart' as _i16;
 import '../modules/dashboard/dashboard_model.dart' as _i19;
 import '../modules/dashboard/service/dashboard_api.dart' as _i11;
 import '../modules/main_page/home_page_model.dart' as _i4;
-import '../modules/order/order_delivery_model.dart' as _i12;
+import '../modules/order/widgets/delivery/delivery_model.dart' as _i12;
 import '../modules/receive_orders/order_model.dart' as _i13;
 import '../modules/receive_orders/service/find_by_order_code_api.dart' as _i7;
 import '../modules/receive_orders/service/service/order_service.dart' as _i8;
@@ -46,8 +46,8 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => _i9.OrderUsercase(get<_i8.OrderService>()));
   gh.lazySingleton<_i10.SigninAPI>(() => _i10.SigninAPI(get<_i6.Dio>()));
   gh.lazySingleton<_i11.DashboardAPI>(() => _i11.DashboardAPI(get<_i6.Dio>()));
-  gh.factory<_i12.OrderDelivery>(
-      () => _i12.OrderDelivery(get<_i9.OrderUsercase>()));
+  gh.factory<_i12.DeliveryModel>(
+      () => _i12.DeliveryModel(get<_i9.OrderUsercase>()));
   gh.factory<_i13.OrderModel>(() => _i13.OrderModel(get<_i9.OrderUsercase>()));
   gh.lazySingleton<_i14.SignDatasource>(
       () => _i14.SignDatasourceImpl(get<_i10.SigninAPI>()));

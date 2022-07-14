@@ -1,25 +1,38 @@
 import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/modules/order/widgets/delivering/delivering.dart';
+import 'package:deskover_app/modules/order/widgets/delivery/delivery.dart';
+import 'package:deskover_app/modules/order/widgets/delivery/delivery_model.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'app/order_delivering.dart';
-import 'order_delivery_model.dart';
+
+import '../receive_orders/order_model.dart';
+
 
 class HomeOrderScreen extends StatefulWidget{
-  const HomeOrderScreen({Key? key}) : super(key: key);
+
+  const HomeOrderScreen({Key? key,}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _HomeOrderScreen();
 }
-class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,OrderDelivery>{
+class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,DeliveryModel>{
+
+
+  @override
+  void initState()  {
+    super.initState();
+    print('widget.initScreen');
+
+  }
+
   @override
   Widget build(BuildContext context) {
       return DefaultTabController(
         length: 2,
-        // initialIndex: widget.initScreen,
+        initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -132,217 +145,14 @@ class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,OrderDelivery>{
                 ),
               ),
               const SizedBox(height: 2,),
-              Expanded(
+                 const Expanded(
                   child: TabBarView(
                     children: [
-                      Obx(()=>
-                          Container(
-                            color: UIColors.white,
-                            child:  ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.dataOrderDelivery.value.length,
-                              itemBuilder: (context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 32,right: 32),
-                                  child: InkWell(
-                                    onTap: (){
-                                      print('Next screen ${index}');
-                                      Get.to(()=> OrderDelivering(OrderCode: viewModel.dataOrderDelivery[index].orderCode! ,));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children:  [
-                                          Text(
-                                            viewModel.dataOrderDelivery[index].orderCode ?? '',
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w700,
-                                                color: UIColors.appBar
-                                            ),
-                                          ),
-                                          const SizedBox(height: 6,),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset('resources/icons/person.svg',height: 16,),
-                                              const SizedBox(width: 6,),
-                                              Expanded(
-                                                child: Text(
-                                                  viewModel.dataOrderDelivery[index].fullName ??'',
-                                                  style: const TextStyle(
-                                                      fontSize: 12
-                                                  ),
-                                                  textAlign: TextAlign.start,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          const SizedBox(height: 4,),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset('resources/icons/location_pin.svg',height: 16,),
-                                              const SizedBox(width: 6,),
-                                              Expanded(
-                                                child: Text(
-                                                  viewModel.dataOrderDelivery[index].address ??'',
-                                                  style: const TextStyle(
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(height: 4,),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset('resources/icons/event_note.svg',height: 16,),
-                                              SizedBox(width: 6,),
-                                              Text(
-                                                viewModel.dataOrderDelivery[index].createdAt!,
-                                                style: const TextStyle(
-                                                    fontSize: 12
-                                                ),
-                                              ),
-                                              Expanded(child: const SizedBox()),
-                                              Text(
-                                                viewModel.dataOrderDelivery[index].totalPrice!+' đ',
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: UIColors.brandA
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) =>  Padding(
-                                padding: const EdgeInsets.only(left: 32,right: 32),
-                                child: Container(height: 1, color: UIColors.black10,),
-                              ),
-                            ),
-                          ),
-                      ),
-                      Obx(()=>
-                          Visibility(
-                            visible: viewModel.dataOrderDelivering.value.length != 0,
-                            child: Container(
-                              color: UIColors.white,
-                              child:  ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: viewModel.dataOrderDelivering.value.length,
-                                itemBuilder: (context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: 32,right: 32),
-                                    child: InkWell(
-                                      onTap: (){
-                                        Get.to(()=> OrderDelivering(OrderCode: viewModel.dataOrderDelivering[index].orderCode,));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children:  [
-                                            Text(
-                                              viewModel.dataOrderDelivering[index].orderCode ?? '',
-                                              style: const TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: UIColors.appBar
-                                              ),
-                                            ),
-                                            const SizedBox(height: 6,),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset('resources/icons/person.svg',height: 16,),
-                                                const SizedBox(width: 6,),
-                                                Expanded(
-                                                  child: Text(
-                                                    viewModel.dataOrderDelivering[index].fullName ??'',
-                                                    style: const TextStyle(
-                                                        fontSize: 12
-                                                    ),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 4,),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset('resources/icons/location_pin.svg',height: 16,),
-                                                const SizedBox(width: 6,),
-                                                Expanded(
-                                                  child: Text(
-                                                    viewModel.dataOrderDelivering[index].address ??'',
-                                                    style: const TextStyle(
-                                                        fontSize: 12
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 4,),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset('resources/icons/event_note.svg',height: 16,),
-                                                const SizedBox(width: 6,),
-                                                Text(
-                                                  viewModel.dataOrderDelivering[index].createdAt!,
-                                                  style: const TextStyle(
-                                                      fontSize: 12
-                                                  ),
-                                                ),
-                                                const Expanded(child: SizedBox()),
-                                                Text(
-                                                  viewModel.dataOrderDelivering[index].totalPrice!+' đ',
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: UIColors.brandA
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                separatorBuilder: (context, index) =>  Padding(
-                                  padding: const EdgeInsets.only(left: 32,right: 32),
-                                  child: Container(height: 1, color: UIColors.black10,),
-                                ),
-                              ),
-                            ),
-                            replacement: Container(
-                              color: UIColors.white,
-                              child: Column(
-                                children: [
-                                  SvgPicture.asset('resources/images/search.svg'),
-                                ],
-                              ),
-                            ),
-                          ),
-
-
-                      ),
+                      Delivery(),
+                      Delivering(),
                     ],
-
-                  ) ),
-
-
-
+                  )
+              ),
             ],
           ),
         ),
@@ -350,6 +160,6 @@ class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,OrderDelivery>{
   }
 
   @override
-  OrderDelivery createViewModel() => getIt<OrderDelivery>();
+  DeliveryModel createViewModel() => getIt<DeliveryModel>();
 
 }

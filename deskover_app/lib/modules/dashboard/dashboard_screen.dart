@@ -68,7 +68,7 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
           color: UIColors.appBar,
           onRefresh: () async{
             await Future.delayed(Duration(seconds: 1));
-            viewModel.refresh;
+            await viewModel.refresh;
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
