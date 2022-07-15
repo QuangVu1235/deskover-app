@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/entity/sign/response/sign_response.dart';
 import 'package:deskover_app/modules/dashboard/dashboard_screen.dart';
@@ -23,6 +25,21 @@ class LoginModel extends ViewModel{
   @factoryMethod
   LoginModel(this._signinUsecase, this.sharedPreferences);
 
+  @override
+  void initState()   {
+    super.initState();
+  }
+
+  Future<void> checkLogin()async {
+    if(sharedPreferences.getString('uToken') != null){
+      getIt<Dio>().options = BaseOptions(headers: {
+        'Authorization': 'Bearer ${sharedPreferences.getString('uToken')}'
+      });
+
+      Get.off(() => HomePage());
+    }
+  }
+
   void onLogin() async {
     if (!(formKey.currentState?.validate() ?? false)) {
       // not validate or null
@@ -42,7 +59,7 @@ class LoginModel extends ViewModel{
       });
       sharedPreferences.remove('login-failed');
     }, reCatchString: true).then((value) async {
-      Get.to(() => HomePage());
+      Get.offAll(() => HomePage());
     }).catchError((error) {
         print(error);
     });

@@ -31,118 +31,122 @@ class _Delivering extends ViewWidget<Delivering, DeliveryModel>{
   Widget build(BuildContext context) {
     return Scaffold(
       body:Obx(()=>
-          Visibility(
-            visible: viewModel.dataOrderDelivering.value.length != 0,
-            child: Container(
-              color: UIColors.white,
+          RefreshIndicator(
+            onRefresh: () => viewModel.getAllOrderDelivering(),
+            child: Visibility(
+              visible: viewModel.dataOrderDelivering.value.length != 0,
+              child: Container(
+                color: UIColors.white,
 
-              child:  ListView(
-                children: [
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: viewModel.dataOrderDelivering.value.length,
-                    itemBuilder: (context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 32,right: 32),
-                        child: InkWell(
-                          onTap: (){
-                            Get.to(()=> OrderDelivering(OrderCode: viewModel.dataOrderDelivering[index].orderCode,));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children:  [
-                                Text(
-                                  viewModel.dataOrderDelivering[index].orderCode ?? '',
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: UIColors.appBar
+                child:  ListView(
+                  children: [
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: viewModel.dataOrderDelivering.value.length,
+                      itemBuilder: (context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 32,right: 32),
+                          child: InkWell(
+                            onTap: (){
+                              Get.to(()=> OrderDelivering(OrderCode: viewModel.dataOrderDelivering[index].orderCode,));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:  [
+                                  Text(
+                                    viewModel.dataOrderDelivering[index].orderCode ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: UIColors.appBar
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 6,),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset('resources/icons/person.svg',height: 16,),
-                                    const SizedBox(width: 6,),
-                                    Expanded(
-                                      child: Text(
-                                        viewModel.dataOrderDelivering[index].fullName ??'',
+                                  const SizedBox(height: 6,),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset('resources/icons/person.svg',height: 16,),
+                                      const SizedBox(width: 6,),
+                                      Expanded(
+                                        child: Text(
+                                          viewModel.dataOrderDelivering[index].fullName ??'',
+                                          style: const TextStyle(
+                                              fontSize: 12
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4,),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset('resources/icons/location_pin.svg',height: 16,),
+                                      const SizedBox(width: 6,),
+                                      Expanded(
+                                        child: Text(
+                                          viewModel.dataOrderDelivering[index].address ??'',
+                                          style: const TextStyle(
+                                              fontSize: 12
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4,),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset('resources/icons/event_note.svg',height: 16,),
+                                      const SizedBox(width: 6,),
+                                      Text(
+                                        viewModel.dataOrderDelivering[index].createdAt!,
                                         style: const TextStyle(
                                             fontSize: 12
                                         ),
-                                        textAlign: TextAlign.start,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 4,),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset('resources/icons/location_pin.svg',height: 16,),
-                                    const SizedBox(width: 6,),
-                                    Expanded(
-                                      child: Text(
-                                        viewModel.dataOrderDelivering[index].address ??'',
+                                      const Expanded(child: SizedBox()),
+                                      Text(
+                                        viewModel.dataOrderDelivering[index].totalPrice!+' đ',
                                         style: const TextStyle(
-                                            fontSize: 12
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                            color: UIColors.brandA
                                         ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 4,),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset('resources/icons/event_note.svg',height: 16,),
-                                    const SizedBox(width: 6,),
-                                    Text(
-                                      viewModel.dataOrderDelivering[index].createdAt!,
-                                      style: const TextStyle(
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                    const Expanded(child: SizedBox()),
-                                    Text(
-                                      viewModel.dataOrderDelivering[index].totalPrice!+' đ',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                          color: UIColors.brandA
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
 
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) =>  Padding(
-                      padding: const EdgeInsets.only(left: 32,right: 32),
-                      child: Container(height: 1, color: UIColors.black10,),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>  Padding(
+                        padding: const EdgeInsets.only(left: 32,right: 32),
+                        child: Container(height: 1, color: UIColors.black10,),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            replacement: Container(
-              color: UIColors.white,
-              width: double.infinity,
-              child: Column(
-                children: [
-                  SvgPicture.asset('resources/images/search.svg'),
-                ],
+              replacement: Container(
+                color: UIColors.white,
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    SvgPicture.asset('resources/images/search.svg'),
+                  ],
+                ),
               ),
             ),
           ),
 
 
       ),
+
     );
   }
 

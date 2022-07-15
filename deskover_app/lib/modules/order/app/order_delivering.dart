@@ -3,14 +3,16 @@ import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../global/global_image.dart';
 import '../../../themes/space_values.dart';
-import '../../receive_orders/order_model.dart';
 import '../widgets/delivery/delivery_model.dart';
 
 class OrderDelivering extends StatefulWidget{
@@ -24,14 +26,12 @@ class OrderDelivering extends StatefulWidget{
 
 }
 class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
+
+
   @override
   void initState()  {
     super.initState();
       viewModel.orderDelivery(widget.OrderCode!,'DG');
-  }
-  Future<void> get()async {
-
-
   }
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                     const Text(
                                       'Mã vận đơn:',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.bold,
                                           color: UIColors.black,
                                           fontSize: 14),
                                     ),
@@ -88,7 +88,36 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 12,),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      child: TextButton(
+                                          onPressed: (){
+                                            Clipboard.setData(ClipboardData(text: viewModel.orderReponese.value?.tel));
+                                          },
+                                          style: ButtonStyle(
+                                            alignment: Alignment.centerLeft, // <-- had to set alignment
+                                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                              EdgeInsets.zero, // <-- had to set padding to zero
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text('${viewModel.orderReponese.value?.tel}',
+                                                      style: const TextStyle(
+                                                          color: UIColors.black
+                                                      ),),
+                                              Icon(Icons.copy,color: UIColors.black70,size: 20,),
+                                            ],
+                                          )
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 Row(
                                   children: [
                                     Container(
@@ -216,6 +245,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                 ),
                                 const SizedBox(height: SpaceValues.space12,),
                                 const TextField(
+                                  enabled: false,
                                   decoration: InputDecoration(
                                       hintText: 'Nhập ghi chú (nếu có)',
 
@@ -231,38 +261,41 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                   padding: EdgeInsets.only(top: 8),
                                   child: Divider(color: UIColors.black,thickness: 0.5,endIndent: 20,indent: 20,height: 10),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children:  [
-                                    const Text(
-                                      'Tổng tiền: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: UIColors.black,
-                                          fontSize: 14),
-                                    ),
-                                    const SizedBox(
-                                      width: SpaceValues.space4,
-                                    ),
-                                    Text(
-                                      viewModel.orderReponese.value?.totalPrice ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: UIColors.black,
-                                          fontSize: 14),
-                                    ),
-                                    const Text(
-                                      'đ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: UIColors.black,
-                                          fontSize: 14),
-                                    ),
-                                    const SizedBox(
-                                      width: SpaceValues.space24,
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8,top: 8,bottom: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children:  [
+                                      const Text(
+                                        'Tổng tiền: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: UIColors.black,
+                                            fontSize: 14),
+                                      ),
+                                      const SizedBox(
+                                        width: SpaceValues.space4,
+                                      ),
+                                      Text(
+                                        viewModel.orderReponese.value?.totalPrice ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: UIColors.black,
+                                            fontSize: 14),
+                                      ),
+                                      const Text(
+                                        'đ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: UIColors.black,
+                                            fontSize: 14),
+                                      ),
+                                      const SizedBox(
+                                        width: SpaceValues.space24,
+                                      ),
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
 
                               ],
@@ -292,7 +325,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                         ),
                                       )),
                                 ),
-                                SizedBox(width: 8,),
+                                const SizedBox(width: 8,),
                                 Expanded(
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -332,7 +365,30 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                   ),
                 ),
               ),
-      )
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 75),
+        child: SizedBox(
+          width: 60,
+          height: 60,
+          child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: UIColors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100)
+                  )
+                ),
+                onPressed: () async {
+                  launchUrlString('tel:${viewModel.orderReponese.value?.tel}');
+                },
+                child: Transform.scale(
+                  scaleX: -1,
+                  child: Icon(LineIcons.phone),
+                ),
+
+          ),
+        ),
+      ),
     );
   }
 

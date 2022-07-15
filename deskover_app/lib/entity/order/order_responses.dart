@@ -50,6 +50,12 @@ class OrderReponses{
   @JsonKey(name: 'createdAt')
   String? createdAt;
 
+  @JsonKey(name:'note')
+  String? note;
+
+  @JsonKey(name:'shipping_note')
+  String? shipping_note;
+
   @JsonKey(name: 'code')
   String? code;
 

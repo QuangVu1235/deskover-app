@@ -11,7 +11,6 @@ import '../../../../themes/space_values.dart';
 import '../../../../themes/ui_colors.dart';
 import '../../../../utils/widgets/view_widget.dart';
 import '../../../main_page/home_page.dart';
-import '../../../receive_orders/order_model.dart';
 import 'delivery_model.dart';
 
 class Delivery extends StatefulWidget{
@@ -36,7 +35,7 @@ class _Delivery extends ViewWidget<Delivery, DeliveryModel>{
           Visibility(
             visible:  viewModel.dataOrderDelivery.value!=null,
             child: RefreshIndicator(
-              onRefresh: () => viewModel.refresh(),
+              onRefresh: () => viewModel.getAllOrderDelivery(),
               child: Container(
                 color: UIColors.white,
                 child:  Obx(
@@ -376,7 +375,7 @@ class _OrderDiaLog extends ViewWidget<OrderDiaLog,DeliveryModel>{
                                     onPressed: () async {
                                       await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ?? '','DG');
                                       await viewModel.getAllOrderDelivery();
-                                      Get.offAll(()=> const HomePage(indexTap: 2,));
+                                      Get.off(()=> const HomePage(indexTap: 2,));
                                       // await viewModel.getAllOrderDelivery();
                                       },
                                     child: const Text(

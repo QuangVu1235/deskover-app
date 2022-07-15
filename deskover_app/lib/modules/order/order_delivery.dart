@@ -8,8 +8,6 @@ import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../receive_orders/order_model.dart';
-
 
 class HomeOrderScreen extends StatefulWidget{
 
@@ -101,11 +99,12 @@ class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,DeliveryModel>{
                 color: UIColors.white,
                 child: Center(
                   child: TabBar(
-                    indicatorColor: UIColors.navSelected,
+                    indicatorColor: UIColors.black,
                     indicatorSize: TabBarIndicatorSize.label,
-                    labelColor: UIColors.navSelected,
+                    labelColor: UIColors.black,
                     labelStyle: const TextStyle(fontWeight: FontWeight.w700),
                     unselectedLabelColor: UIColors.navNonSelected,
+
                     unselectedLabelStyle: const TextStyle(
                       fontWeight: FontWeight.w700,
                     ),
@@ -124,7 +123,7 @@ class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,DeliveryModel>{
                         child: const Tab(
                           // text: 'Kích hoạt bảo hành',
                           child: Text('Đơn hàng tiếp nhận', style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                           ),),
                         ),
                       ),
@@ -136,7 +135,7 @@ class _HomeOrderScreen extends  ViewWidget<HomeOrderScreen,DeliveryModel>{
                         child: const Tab(
                           // text: 'Kích hoạt bảo hành',
                           child: Text('Đơn hàng đang giao', style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                           ),),
                         ),
                       ),
