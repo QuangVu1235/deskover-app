@@ -14,4 +14,6 @@ abstract class SigninAPI{
   @POST('/v1/api/admin/auth/login')
   Future<SigninResponses> signin(@Body() Map<String, dynamic> map);
 
+  @GET('/v1/api/admin/auth/get-principal')
+  Future<SigninResponses> getProfile();
 }

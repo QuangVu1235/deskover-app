@@ -1,4 +1,5 @@
 import 'package:deskover_app/utils/widgets/view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -13,7 +14,9 @@ class DeliveryModel extends ViewModel{
   final OrderUsercase _orderUsercase;
   final RxList<OrderReponses>  dataOrderDelivery = RxList.empty();
   final RxList<OrderReponses>  dataOrderDelivering = RxList.empty();
+  final RxString value_status = 'GH-TB'.obs;
   final Rxn<OrderReponses> orderReponese = Rxn();
+  final TextEditingController note = TextEditingController();
   @factoryMethod
   DeliveryModel(this._orderUsercase);
   @override
@@ -47,9 +50,9 @@ class DeliveryModel extends ViewModel{
     }).then((value) async{
     });
   }
-  Future<void> PickupOrder(String orderCode,String status) async{
+  Future<void> PickupOrder(String orderCode,String status,String note, String title) async{
     loading(() async{
-      await _orderUsercase.doPostPickupOrder(orderCode, status);
+      await _orderUsercase.doPostPickupOrder(orderCode, status,note);
     }).then((value) async {
       AppUtils().showPopup(
           title: 'Thành công',

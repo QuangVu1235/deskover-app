@@ -20,7 +20,7 @@ abstract class OrderApi{
 
 
     @POST('/v1/api/admin/order/{orderCode}')
-    Future<void> doPostPickupOrder(@Path('orderCode') String orderCode,@Query('status') String? status);
+    Future<void> doPostPickupOrder(@Path('orderCode') String orderCode,@Query('status') String? status,@Query('note') String? note);
 
     @GET('/v1/api/admin/order/delivery')
     Future<DataOrderReponse> getAllOrderDelivery(@Query('status') String? status);

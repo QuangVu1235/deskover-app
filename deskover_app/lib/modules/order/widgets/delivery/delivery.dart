@@ -373,7 +373,7 @@ class _OrderDiaLog extends ViewWidget<OrderDiaLog,DeliveryModel>{
                                       // foreground
                                     ),
                                     onPressed: () async {
-                                      await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ?? '','DG');
+                                      await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ?? '','DG','','Cập nhập thành công');
                                       await viewModel.getAllOrderDelivery();
                                       Get.off(()=> const HomePage(indexTap: 2,));
                                       // await viewModel.getAllOrderDelivery();

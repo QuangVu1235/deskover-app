@@ -35,9 +35,9 @@ class _OrderApi implements OrderApi {
   }
 
   @override
-  Future<void> doPostPickupOrder(orderCode, status) async {
+  Future<void> doPostPickupOrder(orderCode, status, note) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'status': status};
+    final queryParameters = <String, dynamic>{r'status': status, r'note': note};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

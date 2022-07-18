@@ -36,7 +36,9 @@ OrderReponses _$OrderReponsesFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
       totalPrice: json['totalPrice'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
-    );
+    )
+      ..note = json['note'] as String?
+      ..shipping_note = json['shipping_note'] as String?;
 
 Map<String, dynamic> _$OrderReponsesToJson(OrderReponses instance) =>
     <String, dynamic>{
@@ -51,6 +53,8 @@ Map<String, dynamic> _$OrderReponsesToJson(OrderReponses instance) =>
       'tel': instance.tel,
       'orderItem': instance.orderItem,
       'createdAt': instance.createdAt,
+      'note': instance.note,
+      'shipping_note': instance.shipping_note,
       'code': instance.code,
       'status': instance.status,
       'totalPrice': instance.totalPrice,

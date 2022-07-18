@@ -63,14 +63,14 @@ class OrderModel extends ViewModel{
 
     Future<void> PickupOrder(String orderCode,String status) async{
       loading(() async{
-        await _orderUsercase.doPostPickupOrder(orderCode, status);
+        await _orderUsercase.doPostPickupOrder(orderCode, status,'');
       }).then((value) async {
-        AppUtils().showPopup(
+        orderReponese.value = null;
+        await AppUtils().showPopup(
           title: 'Thành công',
           subtitle: 'Cập nhập thành công',
           isSuccess: true
         );
-        Get.back();
       });
     }
 

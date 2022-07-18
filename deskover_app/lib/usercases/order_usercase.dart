@@ -14,8 +14,8 @@ class OrderUsercase {
   Future<OrderReponses> findByOrderCode(String orderCode, String status)
   => _orderService.findByOrderCode(orderCode, status);
 
-  Future<void> doPostPickupOrder(String orderCode, String status)
-  => _orderService.doPostPickupOrder(orderCode, status);
+  Future<void> doPostPickupOrder(String orderCode, String status,String note)
+  => _orderService.doPostPickupOrder(orderCode, status,note);
 
   Future<DataOrderReponse> doGetAllOrderDelivery(String status)
   => _orderService.getAllOrderDelivery(status);

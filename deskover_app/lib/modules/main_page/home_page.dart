@@ -10,6 +10,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../dashboard/dashboard_screen.dart';
 import '../order/order_delivery.dart';
+import '../profile/profile.dart';
 import '../receive_orders/find_order.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
           const DashboardScreen(),
           const ReceiveOrders(),
           HomeOrderScreen(),
-          HomeOrderScreen(),
+          ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _HomePageState extends ViewWidget<HomePage,HomePageModel> {
                 tabBackgroundColor: Colors.grey[100]!,
                 color: Colors.black,
                 // backgroundColor: UIColors.white,
-                tabs:   [
+                tabs:   const [
                   GButton(
                     icon:  LineIcons.home ,
                     text: 'Trang chủ',

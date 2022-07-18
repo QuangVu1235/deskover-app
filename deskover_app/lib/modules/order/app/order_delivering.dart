@@ -1,4 +1,5 @@
 import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,7 +141,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                         child: Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children:  [
                                             const Text(
                                               'Địa chỉ giao hàng:',
@@ -149,14 +150,32 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                            SizedBox(height: 4,),
-                                            Text(
-                                              viewModel.orderReponese.value?.address ?? '',
-                                              style: const TextStyle(
-                                                  color: UIColors.black,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600),
-                                            )
+                                            SizedBox(
+                                              child: TextButton(
+                                                  onPressed: (){
+                                                    Clipboard.setData(ClipboardData(text:  viewModel.orderReponese.value?.address ?? ''));
+                                                  },
+
+                                                  style: TextButton.styleFrom(
+
+                                                      onSurface: UIColors.white,
+                                                      backgroundColor: UIColors.white,
+                                                      padding: EdgeInsets.zero,
+                                                      minimumSize: Size(50, 30),
+                                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                      alignment: Alignment.centerLeft),
+                                                  child: Row(
+                                                    children: [
+                                                      Text('${viewModel.orderReponese.value?.address}',
+                                                        style: const TextStyle(
+                                                            color: UIColors.black
+                                                        ),),
+                                                      SizedBox(width: 6,),
+                                                      Icon(Icons.copy,color: UIColors.black70,size: 20,),
+                                                    ],
+                                                  )
+                                              ),
+                                            ),
                                           ],
                                         ))
                                   ],
@@ -244,13 +263,13 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                   ],
                                 ),
                                 const SizedBox(height: SpaceValues.space12,),
-                                const TextField(
+                                TextField(
                                   enabled: false,
                                   decoration: InputDecoration(
-                                      hintText: 'Nhập ghi chú (nếu có)',
-
-                                      hintStyle: TextStyle(
+                                      hintText: viewModel.orderReponese.value?.note ?? 'Ghi chú',
+                                      hintStyle: const TextStyle(
                                         fontStyle: FontStyle.italic,
+                                        color: UIColors.black70
                                       ),
                                       floatingLabelAlignment: FloatingLabelAlignment.center
                                   ),
@@ -312,14 +331,14 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                           // elevation: 0.0,
                                           shape:  RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(5),
-                                              side: BorderSide(color: UIColors.red,width: 1)
+                                              side: const BorderSide(color: UIColors.red,width: 1)
                                           )
                                       ) ,
                                       onPressed: (){
-
+                                          Get.dialog(DiaLogOrderDelivering(viewModel: viewModel,));
                                       },
                                       child: const Text(
-                                        'Huỷ đơn hàng',
+                                        'Cập nhập trạng thái',
                                         style: TextStyle(
                                             color: UIColors.red
                                         ),
@@ -334,12 +353,13 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                             borderRadius: BorderRadius.circular(5),
                                           )
                                       ) ,
-                                      onPressed: (){
-                                          viewModel.dataOrderDelivering.refresh();
-                                          Get.back();
+                                      onPressed: () async{
+                                          await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'', 'GH-TC',
+                                              'Giao hàng thành công','Cập nhập thành công');
+                                          Get.off(()=> const HomePage(initScreen: 2,));
                                       },
                                       child: Text(
-                                        'Xác nhận đơn hàng',
+                                        'Giao hàng thành công',
                                         style: TextStyle(
 
                                         ),
@@ -354,7 +374,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                   ),
                 ),
                 replacement: Container(
-                  margin: EdgeInsets.only(top: 1),
+                  margin: const EdgeInsets.only(top: 1),
                   color: UIColors.white,
                   width: double.infinity,
                   child: Column(
@@ -394,5 +414,126 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
 
   @override
   DeliveryModel createViewModel() => getIt<DeliveryModel>();
+}
+
+class DiaLogOrderDelivering extends StatelessWidget{
+
+  final DeliveryModel viewModel;
+
+  final List<String> status = <String>['Giao hàng không thành công', 'Huỷ đơn'];
+  final List<String> code_status = <String>[ 'GH-TB', 'HUY'];
+
+
+  DiaLogOrderDelivering({Key? key, required this.viewModel}) : super(key: key);
+
+
+
+  @override
+  Widget build(BuildContext context) {
+      return  AlertDialog(
+        titlePadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.symmetric(horizontal: SpaceValues.space16, vertical: 16),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Vui lòng chọn trạng thái đơn hàng:',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: SpaceValues.space8,),
+           Obx(
+             ()=>Visibility(
+               visible: true,
+               child: ConstrainedBox(
+                 constraints: BoxConstraints(maxHeight: MediaQuery.of(Get.context!).size.height * .5),
+                 child: SingleChildScrollView(
+                   child: Column(
+                     children: [
+                       for (int i = 0;
+                       i < status.length;
+                       i++)
+                         ListTile(
+                           visualDensity: const VisualDensity(
+                               horizontal: 0, vertical: -4),
+                           contentPadding: EdgeInsets.zero,
+                           horizontalTitleGap: 0,
+                           tileColor: Colors.transparent,
+                           title: Text(
+                             status[i],
+                             style: TextStyle(fontSize: 12),
+                           ),
+                           leading: Radio(
+                             value: code_status[i],
+                             groupValue:  viewModel.value_status.value,
+                             // activeColor: Color(0xFF6200EE),
+                             onChanged: (value) {
+                               print(value);
+                               viewModel.value_status.value = value.toString();
+                             },
+                           ),
+                         ),
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: const [
+                           Text(
+                             'Ghi chú',
+                             style: TextStyle(
+                                 fontWeight: FontWeight.bold,
+                                 fontSize: 14
+                             ),
+                           ),
+
+                         ],
+                       ),
+                       SizedBox(width: MediaQuery.of(context).size.width *1,height: SpaceValues.space12,),
+                       TextField(
+                         controller: viewModel.note,
+                         decoration: const InputDecoration(
+                             hintText: 'Nhập ghi chú (nếu có)',
+                             hintStyle: TextStyle(
+                                 fontStyle: FontStyle.italic,
+                                 color: UIColors.black70
+                             ),
+                             floatingLabelAlignment: FloatingLabelAlignment.center
+                         ),
+                         minLines: 3,
+                         maxLines: 3,
+                       ),
+                     ],
+                   ),
+                 ),
+               ),
+             ),),
+
+            const SizedBox(
+              height: SpaceValues.space12,
+            ),
+            SizedBox(
+              width: MediaQuery.of(Get.context!).size.width * .5,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.blueAccent
+                ),
+                onPressed: () async{
+                  print(viewModel.note.text);
+                    await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'',viewModel.value_status.value, viewModel.note.text,'Giao hàng thành công').then((value) async => Get.back());
+                    Get.off(()=> HomePage(initScreen: 2,));
+                },
+                child: const Text('Xác nhận'),
+              ),
+            ),
+
+          ],
+        ),
+      );
+  }
 
 }
+
