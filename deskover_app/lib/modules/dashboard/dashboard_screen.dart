@@ -1,4 +1,5 @@
 import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/modules/profile/app/change_password.dart';
 import 'package:deskover_app/themes/space_values.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
 import 'package:deskover_app/utils/widgets/view_widget.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../../themes/dialogs/loading_dialog.dart';
 import '../main_page/home_page.dart';
+import '../profile/app/manager_order.dart';
 import 'chart_bar.dart';
 import 'dashboard_model.dart';
 
@@ -34,7 +36,7 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
         backgroundColor: UIColors.appBar,
       ),
       drawer: Drawer(
-        // backgroundColor: UIColors.white,
+        backgroundColor: UIColors.white,
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
@@ -42,22 +44,97 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              child: Text('Drawer Header'),
+              child: Center(child: Image.asset('resources/icons/loading.png')),
             ),
+            Divider(color: UIColors.black50),
             ListTile(
-              focusColor: UIColors.white,
-              title: const Text('Item 1'),
+              dense: true,
+              contentPadding:
+              const EdgeInsets.only(left: 10, right: 0.0),
+              title: Row(
+                children: const [
+                  Icon(Icons.settings,color: UIColors.black70,),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Quản lý tài khoản",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
+              tileColor: Colors.transparent,
+              trailing: Container(
+                margin: const EdgeInsets.only(right: 8),
+                child:
+                SvgPicture.asset('resources/icons/keyboard_arrow_right.svg'),
+              ),
               onTap: () {
-                Navigator.pop(context);
+                Get.to(() => ChangePasswordScreen());
               },
             ),
             ListTile(
-              title: const Text('Item 2'),
-              onTap: () {},
+              dense: true,
+              contentPadding:
+              const EdgeInsets.only(left: 10, right: 0.0),
+              title: Row(
+                children: const [
+                  Icon(Icons.shopping_cart_outlined,color: UIColors.black70,),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Thống kê đơn hàng",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
+              tileColor: Colors.transparent,
+              trailing: Container(
+                margin: const EdgeInsets.only(right: 8),
+                child:
+                SvgPicture.asset('resources/icons/keyboard_arrow_right.svg'),
+              ),
+              onTap: () {
+                Get.to(() => ManagerOrderSreen());
+              },
+            ),
+            ListTile(
+              dense: true,
+              contentPadding:
+              const EdgeInsets.only(left:10, right: 0.0),
+              title: Row(
+                children: [
+                  SvgPicture.asset('resources/icons/logout.svg'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    "Đăng xuất",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
+              tileColor: Colors.transparent,
+              onTap: () {
+                // viewModel.logout();
+              },
             ),
           ],
         ),
@@ -68,7 +145,7 @@ class _DashboardScreen extends ViewWidget<DashboardScreen,DashBoardModel> {
           color: UIColors.appBar,
           onRefresh: () async{
             await Future.delayed(Duration(seconds: 1));
-            viewModel.refresh;
+            await viewModel.refresh;
           },
           child: SizedBox(
             height: MediaQuery.of(context).size.height,

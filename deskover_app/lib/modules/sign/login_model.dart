@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/entity/sign/response/sign_response.dart';
 import 'package:deskover_app/modules/dashboard/dashboard_screen.dart';
@@ -12,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class LoginModel extends ViewModel{
+
   final SigninUsecase _signinUsecase;
   final SharedPreferences sharedPreferences;
 
@@ -23,7 +26,13 @@ class LoginModel extends ViewModel{
   @factoryMethod
   LoginModel(this._signinUsecase, this.sharedPreferences);
 
+  @override
+  void initState()   {
+    super.initState();
+  }
+
   void onLogin() async {
+    bool? checkLogin = false;
     if (!(formKey.currentState?.validate() ?? false)) {
       // not validate or null
       return;
@@ -31,18 +40,32 @@ class LoginModel extends ViewModel{
     loading(() async {
       SigninResponses value = await _signinUsecase.signin(inputUsername.text, inputPassword.text);
       await sharedPreferences.setString('uToken', value.token ?? '');
+      await sharedPreferences.setString('username', value.fullname ?? '');
+      await sharedPreferences.setString('avatar', value.avatar ?? '');
       await sharedPreferences.setString('password', inputPassword.text);
       if ((value.token ?? '').isEmpty) {
         throw 'Số điện thoại hoặc mật khẩu không đúng';
       }
-      getIt<Dio>().options = BaseOptions(headers: {
-        'Authorization': (value.token?.isNotEmpty ?? false)
-            ? 'Bearer ${value.token}'
-            : '',
+      value.authorities?.forEach((authoritie) async {
+        print('authoritie.role?.name');
+            print(authoritie.role?.name);
+            if(authoritie.role?.roleId == 'ROLE_SHIPPER'){
+              getIt<Dio>().options = BaseOptions(headers: {
+                'Authorization': (value.token?.isNotEmpty ?? false)
+                    ? 'Bearer ${value.token}'
+                    : '',
+              });
+              sharedPreferences.remove('login-failed');
+              checkLogin = true;
+            }
       });
-      sharedPreferences.remove('login-failed');
+      if(checkLogin == false){
+        throw 'Vui lòng đăng nhập đúng vai trò';
+      }
+
+
     }, reCatchString: true).then((value) async {
-      Get.to(() => HomePage());
+      Get.offAll(() => HomePage());
     }).catchError((error) {
         print(error);
     });

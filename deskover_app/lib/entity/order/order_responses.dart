@@ -3,6 +3,19 @@ import 'package:json_annotation/json_annotation.dart';
 part 'order_responses.g.dart';
 
 @JsonSerializable()
+class DataOrderReponse{
+
+  DataOrderReponse();
+
+  @JsonKey(name:'data')
+  List<OrderReponses>? data;
+
+  factory DataOrderReponse.fromJson(Map<String, dynamic> json) =>
+      _$DataOrderReponseFromJson(json);
+  Map<String, dynamic> toJson() => _$DataOrderReponseToJson(this);
+}
+
+@JsonSerializable()
 class OrderReponses{
   @JsonKey(name: 'id')
   int? id;
@@ -36,6 +49,12 @@ class OrderReponses{
 
   @JsonKey(name: 'createdAt')
   String? createdAt;
+
+  @JsonKey(name:'note')
+  String? note;
+
+  @JsonKey(name:'shipping_note')
+  String? shipping_note;
 
   @JsonKey(name: 'code')
   String? code;

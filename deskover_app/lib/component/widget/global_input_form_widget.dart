@@ -150,6 +150,13 @@ class _GlobalInputFormWidgetState extends State<GlobalInputFormWidget> {
 }
 
 class Validator {
+  static String? passwordEasy(valueDy) {
+    String value = valueDy ?? '';
+    if (value.isEmpty) {
+      return 'Vui lòng nhập mật khẩu!';
+    }
+    return null;
+  }
 
   static String? fullnameCanEmpty(valueDy) {
     String value = valueDy ?? '';
@@ -279,7 +286,7 @@ class Validator {
   static String? password(valueDy) {
     String value = valueDy ?? '';
     if (value.length < 6) {
-      return 'Vui lòng nhập mật khẩu ít nhất 8 ký tự';
+      return 'Vui lòng nhập mật khẩu ít nhất 6 ký tự';
     }
   }
   static String? username(valueDy) {

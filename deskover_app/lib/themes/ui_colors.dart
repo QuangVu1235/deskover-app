@@ -41,6 +41,9 @@ class UIColors {
   ];
   static const Color button = Color(0xFF53E88B);
 
+  static const Color red = Color(0xFFED1C24);
+
+
 
   // color in screen
   static const Color backgroundAppBar = Color(0xFFB6118E);

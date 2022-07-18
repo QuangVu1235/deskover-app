@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class SignDatasource{
     Future<SigninResponses> signup(String username, String phone);
+    Future<dynamic> changePassword(dynamic body);
 }
 
 @LazySingleton(as: SignDatasource)
@@ -20,6 +21,10 @@ class SignDatasourceImpl extends SignDatasource{
         "username": username,
         "password": password,
     });
+
+  @override
+  Future<dynamic> changePassword(body)
+  => _signinAPI.changePassword(body);
 
     
 

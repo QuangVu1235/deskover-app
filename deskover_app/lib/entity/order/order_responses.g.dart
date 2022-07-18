@@ -6,6 +6,17 @@ part of 'order_responses.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+DataOrderReponse _$DataOrderReponseFromJson(Map<String, dynamic> json) =>
+    DataOrderReponse()
+      ..data = (json['data'] as List<dynamic>?)
+          ?.map((e) => OrderReponses.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$DataOrderReponseToJson(DataOrderReponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
 OrderReponses _$OrderReponsesFromJson(Map<String, dynamic> json) =>
     OrderReponses(
       id: json['id'] as int?,
@@ -25,7 +36,9 @@ OrderReponses _$OrderReponsesFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
       totalPrice: json['totalPrice'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
-    );
+    )
+      ..note = json['note'] as String?
+      ..shipping_note = json['shipping_note'] as String?;
 
 Map<String, dynamic> _$OrderReponsesToJson(OrderReponses instance) =>
     <String, dynamic>{
@@ -40,6 +53,8 @@ Map<String, dynamic> _$OrderReponsesToJson(OrderReponses instance) =>
       'tel': instance.tel,
       'orderItem': instance.orderItem,
       'createdAt': instance.createdAt,
+      'note': instance.note,
+      'shipping_note': instance.shipping_note,
       'code': instance.code,
       'status': instance.status,
       'totalPrice': instance.totalPrice,

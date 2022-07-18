@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class Themes {
   static ThemeData mainTheme = ThemeData(
+
     fontFamily: 'OpenSans',
     primaryColor: UIColors.brandA,
     backgroundColor: UIColors.white,

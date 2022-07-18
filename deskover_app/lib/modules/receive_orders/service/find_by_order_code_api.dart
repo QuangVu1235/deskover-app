@@ -18,7 +18,15 @@ abstract class OrderApi{
     @GET('/v1/api/admin/order/{orderCode}')
     Future<OrderReponses> getByOrderCodeAndStatusCode(@Path('orderCode') String orderCode,@Query('status') String? status);
 
+
     @POST('/v1/api/admin/order/{orderCode}')
-    Future<void> doPostPickupOrder(@Path('orderCode') String orderCode,@Query('status') String? status);
+    Future<void> doPostPickupOrder(@Path('orderCode') String orderCode,@Query('status') String? status,@Query('note') String? note);
+
+    @GET('/v1/api/admin/order/delivery')
+    Future<DataOrderReponse> getAllOrderDelivery(@Query('status') String? status);
+
+    @GET('/v1/api/admin/order/statis')
+    Future<DataOrderReponse> getAllOrderByUser();
+
 
 }
