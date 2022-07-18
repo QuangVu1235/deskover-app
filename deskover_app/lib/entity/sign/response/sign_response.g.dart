@@ -10,6 +10,7 @@ SigninResponses _$SigninResponsesFromJson(Map<String, dynamic> json) =>
     SigninResponses()
       ..token = json['token'] as String?
       ..fullname = json['fullname'] as String?
+      ..avatar = json['avatar'] as String?
       ..authorities = (json['authorities'] as List<dynamic>?)
           ?.map((e) => Authorities.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -18,6 +19,7 @@ Map<String, dynamic> _$SigninResponsesToJson(SigninResponses instance) =>
     <String, dynamic>{
       'token': instance.token,
       'fullname': instance.fullname,
+      'avatar': instance.avatar,
       'authorities': instance.authorities,
     };
 

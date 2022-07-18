@@ -25,4 +25,8 @@ abstract class OrderApi{
     @GET('/v1/api/admin/order/delivery')
     Future<DataOrderReponse> getAllOrderDelivery(@Query('status') String? status);
 
+    @GET('/v1/api/admin/order/statis')
+    Future<DataOrderReponse> getAllOrderByUser();
+
+
 }

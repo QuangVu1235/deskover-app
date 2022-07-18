@@ -16,4 +16,7 @@ abstract class SigninAPI{
 
   @GET('/v1/api/admin/auth/get-principal')
   Future<SigninResponses> getProfile();
+
+  @PUT('/v1/api/admin/administrator/password')
+  Future<dynamic> changePassword(@Body() dynamic body);
 }

@@ -10,4 +10,7 @@ class SigninUsecase {
 
   Future<SigninResponses> signin(String username, String password)
   => _signDatasource.signup(username,password);
+
+  Future<dynamic> changePassword(dynamic body)
+  => _signDatasource.changePassword(body);
 }

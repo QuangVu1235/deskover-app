@@ -10,6 +10,8 @@ import '../../config/injection_config.dart';
 import '../../themes/space_values.dart';
 import '../../themes/ui_colors.dart';
 import '../../utils/widgets/view_widget.dart';
+import 'app/change_password.dart';
+import 'app/manager_order.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -31,13 +33,13 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 6),
           child: Column(
             children: [
               InkWell(
-                // onTap: () {
-                //   Get.to(const SettingProfile());
-                // },
+                onTap: () {
+                  Get.to( ChangePasswordScreen());
+                },
                 child: FractionallySizedBox(
                   widthFactor: 1,
                   child: Container(
@@ -54,10 +56,10 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                               height: 75,
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
-                                  child: GlobalImage('',fit: BoxFit.none,))),
+                                  child: GlobalImage(viewModel.avatar.value,fit: BoxFit.none,))),
                             SizedBox(width: 10,),
-                            const Text(
-                                '123',
+                            Text(
+                                viewModel.username.value,
                               style: TextStyle(
                                 fontSize: 14,
                               ),
@@ -108,7 +110,7 @@ class _ProfileScreenState extends ViewWidget<ProfileScreen, ProfileModel> {
                             SvgPicture.asset('resources/icons/keyboard_arrow_right.svg'),
                       ),
                       onTap: () {
-                        // Get.to(() => SuportScreen());
+                        Get.to(() => ManagerOrderSreen());
                       },
                     ),
                     // const PolicyTermsScreen(),

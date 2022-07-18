@@ -30,8 +30,6 @@ class OrderModel extends ViewModel{
       super.initState();
     }
 
-
-
     bool validAll() {
       bool result = formKey.currentState?.validate() ?? false;
 
@@ -53,6 +51,16 @@ class OrderModel extends ViewModel{
         });
         return;
       }
+      await loading(() async{
+        await _orderUsercase.findByOrderCode(input, status).then((value) async{
+          orderReponese.value = value;
+        });
+      }).then((value) async{
+      });
+    }
+
+    Future<void> orderDetails(String input,String status) async{
+      orderReponese.value = null;
       await loading(() async{
         await _orderUsercase.findByOrderCode(input, status).then((value) async{
           orderReponese.value = value;

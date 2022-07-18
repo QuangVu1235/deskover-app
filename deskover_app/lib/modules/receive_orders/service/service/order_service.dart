@@ -10,6 +10,8 @@ abstract class OrderService{
     Future<void> doPostPickupOrder(String orderCode, String status,String note);
 
     Future<DataOrderReponse> getAllOrderDelivery(String status);
+
+    Future<DataOrderReponse> getAllOrderByUser();
 }
 
 @LazySingleton(as:OrderService)
@@ -29,6 +31,10 @@ class OrderServiceImpl extends OrderService{
   @override
   Future<DataOrderReponse> getAllOrderDelivery(String status)
   => _orderApi.getAllOrderDelivery(status);
+
+  @override
+  Future<DataOrderReponse> getAllOrderByUser()
+  => _orderApi.getAllOrderByUser();
 
 
 }

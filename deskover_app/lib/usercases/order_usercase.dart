@@ -20,4 +20,9 @@ class OrderUsercase {
   Future<DataOrderReponse> doGetAllOrderDelivery(String status)
   => _orderService.getAllOrderDelivery(status);
 
+  Future<DataOrderReponse> getListMyOrders()
+  => _orderService.getAllOrderByUser();
+
+
+
 }

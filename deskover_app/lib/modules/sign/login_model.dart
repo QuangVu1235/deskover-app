@@ -40,6 +40,8 @@ class LoginModel extends ViewModel{
     loading(() async {
       SigninResponses value = await _signinUsecase.signin(inputUsername.text, inputPassword.text);
       await sharedPreferences.setString('uToken', value.token ?? '');
+      await sharedPreferences.setString('username', value.fullname ?? '');
+      await sharedPreferences.setString('avatar', value.avatar ?? '');
       await sharedPreferences.setString('password', inputPassword.text);
       if ((value.token ?? '').isEmpty) {
         throw 'Số điện thoại hoặc mật khẩu không đúng';

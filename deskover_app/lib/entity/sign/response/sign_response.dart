@@ -13,6 +13,9 @@ class SigninResponses {
   @JsonKey(name: 'fullname')
   String? fullname;
 
+  @JsonKey(name: 'avatar')
+  String? avatar;
+
   @JsonKey(name: 'authorities')
   List<Authorities>? authorities;
 
