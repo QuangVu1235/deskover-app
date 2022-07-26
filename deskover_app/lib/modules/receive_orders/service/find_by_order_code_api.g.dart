@@ -27,7 +27,7 @@ class _OrderApi implements OrderApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<OrderReponses>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/admin/order/${orderCode}',
+                .compose(_dio.options, '/v1/api/admin/orders/${orderCode}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = OrderReponses.fromJson(_result.data!);
@@ -43,7 +43,7 @@ class _OrderApi implements OrderApi {
     final _data = <String, dynamic>{};
     await _dio.fetch<void>(_setStreamType<void>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/v1/api/admin/order/${orderCode}',
+            .compose(_dio.options, '/v1/api/admin/orders/${orderCode}',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;
@@ -59,7 +59,7 @@ class _OrderApi implements OrderApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataOrderReponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/admin/order/delivery',
+                .compose(_dio.options, '/v1/api/admin/orders/delivery',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataOrderReponse.fromJson(_result.data!);
@@ -75,7 +75,7 @@ class _OrderApi implements OrderApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataOrderReponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/admin/order/statis',
+                .compose(_dio.options, '/v1/api/admin/orders/statistical',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataOrderReponse.fromJson(_result.data!);

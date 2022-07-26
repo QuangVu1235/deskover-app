@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:deskover_app/config/injection_config.dart';
-import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/modules/splashcreen/splashscreen.dart';
 import 'package:deskover_app/themes/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'modules/receive_orders/find_order.dart';
 import 'modules/sign/login_screen.dart';
 
 StreamSubscription? iosSubscription;

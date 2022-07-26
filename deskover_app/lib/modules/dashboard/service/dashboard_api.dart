@@ -11,13 +11,13 @@ abstract class DashboardAPI {
   @factoryMethod
   factory DashboardAPI(Dio dio) = _DashboardAPI;
 //Dùng @Path @Query= @Param
-  @GET('/v1/api/admin/order-total-per-month')
+  @GET('/v1/api/admin/orders-total-per-month')
   Future<String> getTotalPerMonth();
 
-  @GET('/v1/api/admin/order-count-order-per-month')
+  @GET('/v1/api/admin/orders-count-order-per-month')
   Future<String> getCountOrderPerMonth();
 
-  @GET('/v1/api/admin/order-7days')
+  @GET('/v1/api/admin/orders-7days')
   Future<DataTotalPrice7Ago> doGetTotalPrice7DaysAgo();
 
 }

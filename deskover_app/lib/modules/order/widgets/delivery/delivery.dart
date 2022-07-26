@@ -1,3 +1,10 @@
+import 'package:deskover_app/config/base_api.dart';
+import 'package:deskover_app/config/injection_config.dart';
+import 'package:deskover_app/global/global_image.dart';
+import 'package:deskover_app/modules/main_page/home_page.dart';
+import 'package:deskover_app/themes/space_values.dart';
+import 'package:deskover_app/themes/ui_colors.dart';
+import 'package:deskover_app/utils/widgets/view_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,12 +12,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-import '../../../../config/injection_config.dart';
-import '../../../../global/global_image.dart';
-import '../../../../themes/space_values.dart';
-import '../../../../themes/ui_colors.dart';
-import '../../../../utils/widgets/view_widget.dart';
-import '../../../main_page/home_page.dart';
 import 'delivery_model.dart';
 
 class Delivery extends StatefulWidget{
@@ -266,7 +267,7 @@ class _OrderDiaLog extends ViewWidget<OrderDiaLog,DeliveryModel>{
                                           width: MediaQuery.of(context).size.width*0.2,
                                           child: Padding(
                                             padding: EdgeInsets.all(10),
-                                            child: GlobalImage(viewModel.orderReponese.value?.orderItem?[index].img ?? ''),
+                                            child: GlobalImage(BaseApi.baseUrl_product+ (viewModel.orderReponese.value?.orderItem?[index].img ?? '')),
                                           ),
                                         ),
                                         Expanded(
@@ -375,7 +376,7 @@ class _OrderDiaLog extends ViewWidget<OrderDiaLog,DeliveryModel>{
                                     onPressed: () async {
                                       await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ?? '','DG','','Cập nhập thành công');
                                       await viewModel.getAllOrderDelivery();
-                                      Get.off(()=> const HomePage(indexTap: 2,));
+                                      Get.offAll(()=> const HomePage(indexTap: 2,));
                                       // await viewModel.getAllOrderDelivery();
                                       },
                                     child: const Text(

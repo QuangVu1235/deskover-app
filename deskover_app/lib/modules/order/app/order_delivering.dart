@@ -1,3 +1,4 @@
+import 'package:deskover_app/config/base_api.dart';
 import 'package:deskover_app/config/injection_config.dart';
 import 'package:deskover_app/modules/main_page/home_page.dart';
 import 'package:deskover_app/themes/ui_colors.dart';
@@ -200,7 +201,7 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                             width: MediaQuery.of(context).size.width*0.2,
                                             child: Padding(
                                               padding: EdgeInsets.all(10),
-                                              child: GlobalImage(viewModel.orderReponese.value?.orderItem?[index].img ?? ''),
+                                              child: GlobalImage(BaseApi.baseUrl_product+ (viewModel.orderReponese.value?.orderItem?[index].img ?? '')),
                                             ),
                                           ),
                                           Expanded(
@@ -523,7 +524,7 @@ class DiaLogOrderDelivering extends StatelessWidget{
                 ),
                 onPressed: () async{
                   print(viewModel.note.text);
-                    await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'',viewModel.value_status.value, viewModel.note.text,'Giao hàng thành công').then((value) async => Get.back());
+                    await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'',viewModel.value_status.value, viewModel.note.text,'Giao hàng không thành công').then((value) async => Get.back());
                     Get.off(()=> HomePage(initScreen: 2,));
                 },
                 child: const Text('Xác nhận'),
