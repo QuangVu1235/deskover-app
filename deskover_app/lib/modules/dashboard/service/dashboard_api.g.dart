@@ -25,7 +25,7 @@ class _DashboardAPI implements DashboardAPI {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/v1/api/admin/order-total-per-month',
+            .compose(_dio.options, '/v1/api/admin/orders-total-per-month',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;
@@ -40,7 +40,7 @@ class _DashboardAPI implements DashboardAPI {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/v1/api/admin/order-count-order-per-month',
+            .compose(_dio.options, '/v1/api/admin/orders-count-order-per-month',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;
@@ -56,7 +56,7 @@ class _DashboardAPI implements DashboardAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DataTotalPrice7Ago>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/api/admin/order-7days',
+                .compose(_dio.options, '/v1/api/admin/orders-7days',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DataTotalPrice7Ago.fromJson(_result.data!);

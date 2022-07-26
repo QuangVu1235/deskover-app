@@ -157,7 +157,7 @@ class _OrderDetail extends ViewWidget<OrderDetail, OrderModel> {
                                             )),
                                         SizedBox(
                                             width: MediaQuery.of(context).size.height *0.10,
-                                            child: GlobalImage(BaseApi.baseUrl+'/app/images/qr_code_scanner.png'))
+                                            child: GlobalImage(BaseApi.baseUrl_qrCode+(viewModel.orderReponese.value?.qrCode ?? '')))
                                       ],
                                     ),
                                     Row(
@@ -266,7 +266,7 @@ class _OrderDetail extends ViewWidget<OrderDetail, OrderModel> {
                                                 width: MediaQuery.of(context).size.width*0.2,
                                                 child: Padding(
                                                   padding: EdgeInsets.all(10),
-                                                  child: GlobalImage(viewModel.orderReponese.value?.orderItem?[index].img ?? ''),
+                                                  child: GlobalImage(BaseApi.baseUrl_product+(viewModel.orderReponese.value?.orderItem?[index].img ?? '')),
                                                 ),
                                               ),
                                               Expanded(
