@@ -23,6 +23,7 @@ class OrderReponses{
   @JsonKey(name: 'orderCode')
   String? orderCode;
 
+  @JsonKey(name: 'qrCode')
   String? qrCode;
 
   @JsonKey(name: 'fullName')

@@ -16,8 +16,8 @@ class SigninResponses {
   @JsonKey(name: 'avatar')
   String? avatar;
 
-  @JsonKey(name: 'authorities')
-  List<Authorities>? authorities;
+  @JsonKey(name: 'authority')
+  Authorities? authority;
 
   factory SigninResponses.fromJson(Map<String, dynamic> json) =>
       _$SigninResponsesFromJson(json);

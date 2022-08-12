@@ -32,11 +32,12 @@ class LoginModel extends ViewModel{
   }
 
   void onLogin() async {
-    bool? checkLogin = false;
+    bool checkLogin = false;
     if (!(formKey.currentState?.validate() ?? false)) {
       // not validate or null
       return;
     }
+    sharedPreferences.remove('uToken');
     loading(() async {
       SigninResponses value = await _signinUsecase.signin(inputUsername.text, inputPassword.text);
       await sharedPreferences.setString('uToken', value.token ?? '');
@@ -46,26 +47,20 @@ class LoginModel extends ViewModel{
       if ((value.token ?? '').isEmpty) {
         throw 'Số điện thoại hoặc mật khẩu không đúng';
       }
-      value.authorities?.forEach((authoritie) async {
-        print('authoritie.role?.name');
-            print(authoritie.role?.name);
-            if(authoritie.role?.roleId == 'ROLE_SHIPPER'){
-              getIt<Dio>().options = BaseOptions(headers: {
-                'Authorization': (value.token?.isNotEmpty ?? false)
-                    ? 'Bearer ${value.token}'
-                    : '',
-              });
-              sharedPreferences.remove('login-failed');
-              checkLogin = true;
-            }
-      });
+      if(value.authority?.role?.roleId == 'ROLE_SHIPPER'){
+        getIt<Dio>().options = BaseOptions(headers: {
+          'Authorization': (value.token?.isNotEmpty ?? false)
+              ? 'Bearer ${value.token}'
+              : '',
+        });
+        sharedPreferences.remove('login-failed');
+        checkLogin = true;
+      }
       if(checkLogin == false){
         throw 'Vui lòng đăng nhập đúng vai trò';
       }
-
-
     }, reCatchString: true).then((value) async {
-      Get.offAll(() => HomePage());
+      Get.offAll(() => const HomePage());
     }).catchError((error) {
         print(error);
     });

@@ -62,11 +62,11 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                     borderRadius: BorderRadius.zero,
                   ),
                   child: SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      child: Column(
-                        children: [
-                          Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
                             child: ListView(
                               children: [
                                 Row(
@@ -158,7 +158,6 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                                   },
 
                                                   style: TextButton.styleFrom(
-
                                                       onSurface: UIColors.white,
                                                       backgroundColor: UIColors.white,
                                                       padding: EdgeInsets.zero,
@@ -167,10 +166,12 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                                                       alignment: Alignment.centerLeft),
                                                   child: Row(
                                                     children: [
-                                                      Text('${viewModel.orderReponese.value?.address}',
-                                                        style: const TextStyle(
-                                                            color: UIColors.black
-                                                        ),),
+                                                      Expanded(
+                                                        child: Text('${viewModel.orderReponese.value?.address}',
+                                                          style: const TextStyle(
+                                                              color: UIColors.black
+                                                          ),),
+                                                      ),
                                                       SizedBox(width: 6,),
                                                       Icon(Icons.copy,color: UIColors.black70,size: 20,),
                                                     ],
@@ -321,56 +322,70 @@ class _OrderDelivering extends ViewWidget<OrderDelivering, DeliveryModel>{
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: UIColors.white,
-                                          // elevation: 0.0,
-                                          shape:  RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(5),
-                                              side: const BorderSide(color: UIColors.red,width: 1)
-                                          )
-                                      ) ,
-                                      onPressed: (){
-                                          Get.dialog(DiaLogOrderDelivering(viewModel: viewModel,));
-                                      },
-                                      child: const Text(
-                                        'Cập nhập trạng thái',
-                                        style: TextStyle(
-                                            color: UIColors.red
-                                        ),
-                                      )),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
+                          decoration: const BoxDecoration(
+                            color: UIColors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 218, 218, 218),
+                                blurRadius: 15, // soften the shadow
+                                spreadRadius: -10, //extend the shadow
+                                offset: Offset(
+                                  0.0, // Move to right 10  horizontally
+                                  -16.0, // Move to bottom 10 Vertically
                                 ),
-                                const SizedBox(width: 8,),
-                                Expanded(
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: UIColors.appBar,
-                                          shape:  RoundedRectangleBorder(
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: UIColors.white,
+                                        // elevation: 0.0,
+                                        shape:  RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(5),
-                                          )
-                                      ) ,
-                                      onPressed: () async{
-                                          await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'', 'GH-TC',
-                                              'Giao hàng thành công','Cập nhập thành công');
-                                          Get.off(()=> const HomePage(initScreen: 2,));
-                                      },
-                                      child: Text(
-                                        'Giao hàng thành công',
-                                        style: TextStyle(
+                                            side: const BorderSide(color: UIColors.red,width: 1)
+                                        )
+                                    ) ,
+                                    onPressed: (){
+                                        Get.dialog(DiaLogOrderDelivering(viewModel: viewModel,));
+                                    },
+                                    child: const Text(
+                                      'Cập nhập đơn hàng',
+                                      style: TextStyle(
+                                          color: UIColors.red
+                                      ),
+                                    )),
+                              ),
+                              const SizedBox(width: 8,),
+                              Expanded(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: UIColors.appBar,
+                                        shape:  RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                        )
+                                    ) ,
+                                    onPressed: () async{
+                                        await viewModel.PickupOrder(viewModel.orderReponese.value?.orderCode ??'', 'GH-TC',
+                                            'Giao hàng thành công','Cập nhập thành công');
+                                        Get.off(()=> const HomePage(initScreen: 2,));
+                                    },
+                                    child: Text(
+                                      'Thành công',
+                                      style: TextStyle(
 
-                                        ),
-                                      )),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),

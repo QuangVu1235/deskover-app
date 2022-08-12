@@ -473,12 +473,7 @@ class _ReceiveOrders extends ViewWidget<ReceiveOrders, OrderModel> {
       onDetect: (barcode, args) {
         String rowcode = barcode.rawValue ?? '';
         print(rowcode);
-        // String? result;
-
-        // if (result?.isEmpty ?? true) {
-        //   loading(() async => throw 'Vui lòng quét Barcode hoặc QRcode sản phẩm của Mutosi');
-        // }
-        // inputBarcode.text = result ?? '';
+        viewModel.onSearchQr(rowcode,'C-LH');
         Get.back();
       },
     ));

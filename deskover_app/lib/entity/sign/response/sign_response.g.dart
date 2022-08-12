@@ -11,16 +11,16 @@ SigninResponses _$SigninResponsesFromJson(Map<String, dynamic> json) =>
       ..token = json['token'] as String?
       ..fullname = json['fullname'] as String?
       ..avatar = json['avatar'] as String?
-      ..authorities = (json['authorities'] as List<dynamic>?)
-          ?.map((e) => Authorities.fromJson(e as Map<String, dynamic>))
-          .toList();
+      ..authority = json['authority'] == null
+          ? null
+          : Authorities.fromJson(json['authority'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$SigninResponsesToJson(SigninResponses instance) =>
     <String, dynamic>{
       'token': instance.token,
       'fullname': instance.fullname,
       'avatar': instance.avatar,
-      'authorities': instance.authorities,
+      'authority': instance.authority,
     };
 
 Authorities _$AuthoritiesFromJson(Map<String, dynamic> json) => Authorities(

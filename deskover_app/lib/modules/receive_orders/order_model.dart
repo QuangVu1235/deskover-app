@@ -59,6 +59,15 @@ class OrderModel extends ViewModel{
       });
     }
 
+    Future<void> onSearchQr(String input,String status) async{
+      await loading(() async{
+        await _orderUsercase.findByOrderCode(input, status).then((value) async{
+          orderReponese.value = value;
+        });
+      }).then((value) async{
+      });
+    }
+
     Future<void> orderDetails(String input,String status) async{
       orderReponese.value = null;
       await loading(() async{
